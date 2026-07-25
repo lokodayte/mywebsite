@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <meta name="description" content="Personal portfolio of a cybersecurity student — projects, skills, certifications, and experience." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <nav id="nav-root" class="nav container" aria-label="Primary"></nav>
+  </header>
+
+  <main id="main">
+    <section id="hero" class="section hero-section" aria-label="Introduction">
+      <div id="hero-root" class="container"></div>
+    </section>
+
+    <section id="about" class="section" aria-label="About">
+      <div id="about-root" class="container"></div>
+    </section>
+
+    <section id="projects" class="section" aria-label="Projects">
+      <div id="projects-root" class="container"></div>
+    </section>
+
+    <section id="skills" class="section" aria-label="Skills">
+      <div id="skills-root" class="container"></div>
+    </section>
+
+    <section id="timeline" class="section" aria-label="Education and experience">
+      <div id="timeline-root" class="container"></div>
+    </section>
+
+    <section id="certificates" class="section" aria-label="Certificates">
+      <div id="certificates-root" class="container"></div>
+    </section>
+
+    <section id="interests" class="section" aria-label="Interests">
+      <div id="interests-root" class="container"></div>
+    </section>
+
+    <section id="contact" class="section" aria-label="Contact">
+      <div id="contact-root" class="container"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="mono">&copy; <span id="footerYear"></span> &mdash; Built with plain HTML, CSS &amp; JS.</p>
+  </footer>
+
+  <div id="loadingState" class="load-state" role="status" aria-live="polite">
+    <p class="mono">Loading content&hellip;</p>
+  </div>
+  <div id="errorState" class="load-state load-state--error" role="alert" hidden>
+    <p class="mono">Failed to load site content. Please try refreshing the page.</p>
+  </div>
+
+  <script src="js/render.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Content Editor</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+  <a class="skip-link" href="#adminMain">Skip to main content</a>
+
+  <!-- ==================== TOKEN GATE ==================== -->
+  <div id="tokenGate" class="token-gate">
+    <div class="token-gate__panel card">
+      <p class="mono token-gate__eyebrow">admin // authentication required</p>
+      <h1 class="token-gate__title">Content Admin</h1>
+      <p class="token-gate__copy">
+        This panel publishes changes by committing directly to
+        <code class="mono">data/content.json</code> in your GitHub repository via the GitHub
+        REST API. Nothing is stored on a server — your token stays only in this browser tab's
+        <code class="mono">sessionStorage</code> and is sent only to <code class="mono">api.github.com</code>.
+      </p>
+
+      <form id="configForm" class="stack">
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Repo owner</span>
+            <input type="text" id="cfgOwner" name="owner" placeholder="e.g. octocat" required autocomplete="off" />
+          </label>
+          <label class="field">
+            <span class="field__label">Repo name</span>
+            <input type="text" id="cfgRepo" name="repo" placeholder="e.g. mywebsite" required autocomplete="off" />
+          </label>
+          <label class="field field--narrow">
+            <span class="field__label">Branch</span>
+            <input type="text" id="cfgBranch" name="branch" placeholder="main" value="main" required autocomplete="off" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field__label">GitHub personal access token</span>
+          <input
+            type="password"
+            id="cfgToken"
+            name="token"
+            placeholder="github_pat_..."
+            autocomplete="off"
+            required
+          />
+        </label>
+
+        <details class="token-help">
+          <summary>How do I get a token?</summary>
+          <ol>
+            <li>On GitHub, go to <strong>Settings &rarr; Developer settings &rarr; Fine-grained tokens &rarr; Generate new token</strong>.</li>
+            <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick this repository only.</li>
+            <li>Under <strong>Permissions &rarr; Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>. No other permissions are needed.</li>
+            <li>Generate the token and paste it above. It is never written to any file or committed anywhere.</li>
+          </ol>
+        </details>
+
+        <button type="submit" class="btn btn--primary">Connect</button>
+        <p id="configError" class="form-error" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN APP ==================== -->
+  <div id="adminApp" class="admin-app" hidden>
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <span class="mono admin-topbar__badge">admin</span>
+        <span id="repoLabel" class="mono admin-topbar__repo"></span>
+      </div>
+      <div class="admin-topbar__right">
+        <span id="publishStatus" class="publish-status mono" role="status" aria-live="polite"></span>
+        <button id="saveBtn" class="btn btn--primary" type="button">Save changes</button>
+        <button id="signOutBtn" class="btn btn--secondary" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-sidebar" aria-label="Content sections">
+        <ul id="sectionNav" class="admin-sidebar__list mono"></ul>
+      </nav>
+
+      <main id="adminMain" class="admin-editor">
+        <div id="editorPanels"></div>
+      </main>
+
+      <aside class="admin-preview" aria-label="Live preview">
+        <div class="admin-preview__bar mono">
+          <span>live preview</span>
+        </div>
+        <iframe
+          id="previewFrame"
+          class="admin-preview__frame"
+          title="Live preview of portfolio site"
+        ></iframe>
+      </aside>
+    </div>
+  </div>
+
+  <template id="tpl-confirm-dialog">
+    <div class="confirm-overlay">
+      <div class="confirm-box card">
+        <p class="confirm-box__msg"></p>
+        <div class="confirm-box__actions">
+          <button type="button" class="btn btn--secondary confirm-box__cancel">Cancel</button>
+          <button type="button" class="btn btn--danger confirm-box__ok">Delete</button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="js/render.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
