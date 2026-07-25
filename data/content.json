@@ -1,0 +1,151 @@
+{
+  "hero": {
+    "name": "Elina Mosoian",
+    "role": "Cybersecurity Student",
+    "tagline": "Breaking things (on purpose) to learn how to defend them.",
+    "typingStrings": [
+      "whoami",
+      "nmap -sV target.local",
+      "sudo defend --always"
+    ],
+    "intro": "Third-year cybersecurity student focused on network defense, offensive security fundamentals, and secure application design. I build labs, break my own code, and write up what I learn.",
+    "status": "Available for internships",
+    "ctas": [
+      { "label": "View Projects", "href": "#projects", "style": "primary" },
+      { "label": "Contact Me", "href": "#contact", "style": "secondary" }
+    ]
+  },
+  "about": {
+    "heading": "About",
+    "paragraphs": [
+      "I'm a cybersecurity student who got into this field after setting up a home lab just to see if I could break it. That curiosity turned into a habit of building vulnerable environments, patching them, and documenting the process.",
+      "My focus areas right now are network security, Linux hardening, and web application security. I'm working toward a career in security operations or penetration testing, and I spend a lot of my free time on CTFs and personal security tooling."
+    ],
+    "photo": "assets/profile-placeholder.svg",
+    "stats": [
+      { "label": "CTFs completed", "value": "20+" },
+      { "label": "Certifications", "value": "3" },
+      { "label": "Lab hours logged", "value": "300+" },
+      { "label": "GitHub repos", "value": "15" }
+    ]
+  },
+  "projects": [
+    {
+      "id": "proj-homelab-siem",
+      "title": "Home Lab SIEM",
+      "status": "live",
+      "initials": "HL",
+      "description": "A self-hosted Security Information and Event Management setup using the Elastic stack, ingesting logs from a small virtualized network to practice detection engineering.",
+      "tech": ["Elastic Stack", "Proxmox", "Sysmon", "Suricata"],
+      "link": "https://github.com/example/homelab-siem"
+    },
+    {
+      "id": "proj-vuln-webapp",
+      "title": "Intentionally Vulnerable Web App",
+      "status": "source",
+      "initials": "VW",
+      "description": "A deliberately vulnerable Flask application built to practice and teach OWASP Top 10 exploitation and remediation, complete with writeups for each vulnerability class.",
+      "tech": ["Python", "Flask", "SQLite", "Docker"],
+      "link": "https://github.com/example/vuln-webapp"
+    },
+    {
+      "id": "proj-network-scanner",
+      "title": "Async Network Scanner",
+      "status": "demo",
+      "initials": "NS",
+      "description": "A lightweight asynchronous port and service scanner written in Python, built as a faster learning alternative to understand how tools like nmap work under the hood.",
+      "tech": ["Python", "asyncio", "Sockets"],
+      "link": "https://github.com/example/async-scanner"
+    },
+    {
+      "id": "proj-phishing-sim",
+      "title": "Phishing Awareness Simulator",
+      "status": "live",
+      "initials": "PS",
+      "description": "A campus club project: a controlled phishing simulation platform used to run authorized awareness campaigns and generate reporting-rate analytics for student orgs.",
+      "tech": ["Node.js", "Express", "PostgreSQL"],
+      "link": "https://github.com/example/phishing-sim"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Security & Networking",
+      "items": ["Network Security", "Linux Hardening", "Wireshark", "Nmap", "Burp Suite", "SIEM / Log Analysis", "Incident Response Basics"]
+    },
+    {
+      "group": "Languages & Tools",
+      "items": ["Python", "Bash", "JavaScript", "SQL", "Git", "Docker", "Metasploit"]
+    },
+    {
+      "group": "Currently Learning",
+      "items": ["Malware Analysis", "Cloud Security (AWS)", "OSCP Prep", "Reverse Engineering"]
+    }
+  ],
+  "timeline": [
+    {
+      "id": "tl-1",
+      "start": "2023-08",
+      "end": "Present",
+      "title": "B.S. Cybersecurity",
+      "org": "State University",
+      "description": "Coursework in network security, applied cryptography, and systems administration. Active member of the Cyber Defense Club."
+    },
+    {
+      "id": "tl-2",
+      "start": "2024-05",
+      "end": "2024-08",
+      "title": "Security Operations Intern",
+      "org": "Local IT Managed Services Co.",
+      "description": "Monitored SIEM alerts, triaged phishing reports, and assisted with quarterly vulnerability scans across client environments."
+    },
+    {
+      "id": "tl-3",
+      "start": "2023-09",
+      "end": "Present",
+      "title": "Cyber Defense Club — CTF Team Lead",
+      "org": "State University",
+      "description": "Organize weekly CTF practice sessions and represent the university at regional collegiate cybersecurity competitions."
+    },
+    {
+      "id": "tl-4",
+      "start": "2022-08",
+      "end": "2023-06",
+      "title": "High School Diploma",
+      "org": "Lincoln High School",
+      "description": "Graduated with honors; led the introductory coding club and completed an independent study in networking fundamentals."
+    }
+  ],
+  "certificates": [
+    {
+      "id": "cert-1",
+      "name": "CompTIA Security+",
+      "issuer": "CompTIA",
+      "date": "2024-11",
+      "link": "https://www.credly.com/example-security-plus"
+    },
+    {
+      "id": "cert-2",
+      "name": "Google Cybersecurity Professional Certificate",
+      "issuer": "Google / Coursera",
+      "date": "2024-05",
+      "link": "https://www.credly.com/example-google-cyber"
+    },
+    {
+      "id": "cert-3",
+      "name": "Introduction to Cyber Security",
+      "issuer": "Cisco Networking Academy",
+      "date": "2023-12",
+      "link": "https://www.credly.com/example-cisco-intro"
+    }
+  ],
+  "interests": ["Capture the Flag", "Home Labbing", "Chess", "Rock Climbing", "Open Source", "Retro Hardware"],
+  "contact": {
+    "email": "elinamosoian@gmail.com",
+    "resume": "assets/resume-placeholder.pdf",
+    "socials": [
+      { "label": "GitHub", "href": "https://github.com/example" },
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/example" },
+      { "label": "TryHackMe", "href": "https://tryhackme.com/p/example" }
+    ]
+  }
+}
