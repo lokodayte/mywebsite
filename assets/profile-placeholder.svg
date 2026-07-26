@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
   <title id="title">Placeholder profile photo</title>
-  <rect width="400" height="400" fill="#131a24" />
-  <rect x="1" y="1" width="398" height="398" fill="none" stroke="#1e2733" stroke-width="2" />
-  <circle cx="200" cy="160" r="70" fill="#1e2733" />
-  <path d="M70 360c10-80 70-130 130-130s120 50 130 130z" fill="#1e2733" />
-  <text x="200" y="380" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#4fd1c5">
-    NO_IMAGE
+  <rect width="400" height="400" fill="#e3e9ed" />
+  <rect x="1" y="1" width="398" height="398" fill="none" stroke="#d3dbe1" stroke-width="2" />
+  <circle cx="200" cy="160" r="70" fill="#c9d3da" />
+  <path d="M70 360c10-80 70-130 130-130s120 50 130 130z" fill="#c9d3da" />
+  <text x="200" y="380" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#4c5f72">
+    No photo yet
   </text>
 </svg>

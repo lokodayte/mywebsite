@@ -1,7 +1,7 @@
 /**
  * Public site controller: fetches data/content.json, renders every section
- * via the shared Render functions, then wires up nav/scroll and the hero
- * typing effect.
+ * via the shared Render functions, then wires up nav/scroll and a gentle
+ * reveal-on-scroll effect.
  */
 (function () {
   "use strict";
@@ -22,7 +22,7 @@
       if (loadingState) loadingState.hidden = true;
       initNav();
       initScrollSpy();
-      initTypingEffect(data);
+      initScrollReveal();
     })
     .catch(function (err) {
       console.error("Failed to load content.json:", err);
@@ -77,50 +77,54 @@
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  function initTypingEffect(data) {
-    var target = document.getElementById("heroTyping");
-    var strings =
-      data && data.hero && Array.isArray(data.hero.typingStrings) ? data.hero.typingStrings : [];
-    if (!target || strings.length === 0) return;
+  // Gentle one-time fade/slide as each section enters the viewport. Sections
+  // are fully visible by default (see css/style.css) — this only opts a
+  // section into the brief "hidden, about to animate in" state right before
+  // it's revealed, so a JS error never leaves content permanently invisible.
+  // Skipped entirely under reduced motion.
+  //
+  // Deliberately not IntersectionObserver-based: that API only fires when a
+  // section is caught mid-transit through the viewport across a rendered
+  // frame, so a very fast scroll, an instant "End"-key jump, or a
+  // full-page/print capture can skip a section's transition window entirely
+  // and leave it invisible forever. Re-checking each pending section's actual
+  // position after every scroll/resize event instead is correct at any
+  // scroll speed, since it reveals anything now at-or-above the fold rather
+  // than depending on having witnessed it cross a threshold.
+  function initScrollReveal() {
+    var sections = document.querySelectorAll("main .section");
+    if (!sections.length || prefersReducedMotion()) return;
 
-    if (prefersReducedMotion()) {
-      target.textContent = strings[0];
-      return;
-    }
+    var pending = Array.prototype.slice.call(sections);
+    pending.forEach(function (section) {
+      section.classList.add("reveal-pending");
+    });
+    var ticking = false;
 
-    var stringIndex = 0;
-    var charIndex = 0;
-    var deleting = false;
-    var typeDelay = 60;
-    var deleteDelay = 30;
-    var holdDelay = 1400;
-    var betweenDelay = 400;
-
-    function tick() {
-      var current = strings[stringIndex];
-
-      if (!deleting) {
-        charIndex++;
-        target.textContent = current.slice(0, charIndex);
-        if (charIndex === current.length) {
-          deleting = true;
-          setTimeout(tick, holdDelay);
-          return;
+    function revealVisible() {
+      var vh = window.innerHeight;
+      pending = pending.filter(function (section) {
+        if (section.getBoundingClientRect().top < vh * 0.9) {
+          section.classList.add("is-visible");
+          return false;
         }
-        setTimeout(tick, typeDelay);
-      } else {
-        charIndex--;
-        target.textContent = current.slice(0, charIndex);
-        if (charIndex === 0) {
-          deleting = false;
-          stringIndex = (stringIndex + 1) % strings.length;
-          setTimeout(tick, betweenDelay);
-          return;
-        }
-        setTimeout(tick, deleteDelay);
+        return true;
+      });
+      if (!pending.length) {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
       }
+      ticking = false;
     }
 
-    setTimeout(tick, typeDelay);
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(revealVisible);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    revealVisible();
   }
 })();
