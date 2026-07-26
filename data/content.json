@@ -1,84 +1,110 @@
 {
   "hero": {
     "name": "Boris Sargsyan",
-    "role": "Cybersecurity Student",
-    "tagline": "Studying how systems break so I can help build ones that don't.",
-    "intro": "Cybersecurity student at Marist University focused on network security, secure system design, and applied penetration testing. Previously completed the IB Diploma at UWC Dilijan, where a school network security project first got me hooked on this field.",
+    "role": "Cybersecurity Student — Marist University",
+    "tagline": "Studying how systems break, so I can help build the ones that don't.",
+    "intro": "Cybersecurity student at Marist University, originally from Yerevan, Armenia, and a recent IB Diploma graduate of UWC Dilijan. Before university I built and shipped real things as like a custom software platform for a student-run, charity based business, a fleet of FPV drones designed and flown from scratch, and 15+ completed programming courses across Python, Java, C/C++, JavaScript, and SQL.",
     "status": "Available for internships",
     "ctas": [
-      { "label": "View Projects", "href": "#projects", "style": "primary" },
-      { "label": "Contact Me", "href": "#contact", "style": "secondary" }
+      {
+        "label": "View Projects",
+        "href": "#projects",
+        "style": "primary"
+      },
+      {
+        "label": "Contact Me",
+        "href": "#contact",
+        "style": "secondary"
+      }
     ],
     "highlights": [
-      { "label": "Education", "value": "B.S. Cybersecurity, Marist University" },
-      { "label": "Focus", "value": "Network Security & Penetration Testing" },
-      { "label": "Location", "value": "Poughkeepsie, NY" }
+      {
+        "label": "Education",
+        "value": "B.S. Cybersecurity, Marist University (starting Fall 2026)"
+      },
+      {
+        "label": "Prior",
+        "value": "IB Diploma, UWC Dilijan, Armenia(2024-2026)"
+      },
+      {
+        "label": "Prior - 1",
+        "value": "Cybernetics, Real School Armenia(2022-2024)"
+      }
     ]
   },
   "about": {
     "heading": "About",
     "paragraphs": [
-      "I'm a cybersecurity student at Marist University with a growing focus on network defense, secure system design, and offensive security fundamentals. My interest in this field started at UWC Dilijan, where I helped audit and harden the school's own network as an independent project.",
-      "Since then I've kept building: home lab environments, small security tools, and write-ups documenting what I learn along the way. I'm currently preparing for entry-level certifications and looking for an internship where I can apply what I've built in a real security team."
+      "I'm an cybersecurity student at Marist University. My path here started at UWC Dilijan, where I completed the IB Diploma while building things on the side as like a full operations platform for a student-run business, a self-built fleet of FPV drones, and a stack of self-directed courses in Python, Java, C/C++, JavaScript, and SQL.\n\nOutside the classroom, I compete as an Armenian national Taekwondo champion and hold a 1st Dan black belt, the same discipline that now drives how I approach learning security from the ground up. I'm currently working through foundational ethical hacking and network security material and looking for an internship where I can put it to use on a real team."
     ],
     "photo": "assets/profile-placeholder.svg",
     "stats": [
-      { "label": "CTFs completed", "value": "15+" },
-      { "label": "Certifications", "value": "2" },
-      { "label": "Lab hours logged", "value": "250+" },
-      { "label": "GitHub repos", "value": "12" }
+      {
+        "value": "47.66%",
+        "label": "UWC Dilijan students using my software",
+        "id": "stat-57mne9"
+      },
+      {
+        "label": "Programming courses completed",
+        "value": "15+"
+      },
+      {
+        "value": "5+",
+        "label": "FPV drones designed & piloted",
+        "id": "stat-cft98x"
+      },
+      {
+        "value": "2021",
+        "label": "Armenian National Taekwondo Champion",
+        "id": "stat-3jb72r"
+      }
     ]
   },
   "projects": [
     {
-      "id": "proj-network-scanner",
-      "title": "Campus Network Vulnerability Scanner",
+      "title": "Bolik — Student-Run Charitable Business",
       "status": "live",
-      "initials": "NV",
-      "description": "A Python tool that scans a lab network for outdated services and common misconfigurations, then generates a plain-language remediation report for non-technical staff.",
-      "tech": ["Python", "Nmap", "Sockets", "Docker"],
-      "link": "https://github.com/example/campus-network-scanner"
-    },
-    {
-      "id": "proj-vulnerable-login",
-      "title": "Intentionally Vulnerable Login Portal",
-      "status": "source",
-      "initials": "LP",
-      "description": "A deliberately vulnerable login application built to practice and teach common web authentication flaws (SQL injection, broken session handling, weak password policies) with accompanying fixes.",
-      "tech": ["Flask", "SQLite", "Python", "OWASP Top 10"],
-      "link": "https://github.com/example/vulnerable-login-portal"
-    },
-    {
-      "id": "proj-breach-checker",
-      "title": "Password Strength & Breach Checker",
-      "status": "demo",
-      "initials": "PB",
-      "description": "A client-side tool that scores password strength and checks it against known breach datasets using k-anonymity, without ever sending the full password over the network.",
-      "tech": ["JavaScript", "HaveIBeenPwned API", "Crypto API"],
-      "link": "https://github.com/example/breach-checker"
-    },
-    {
-      "id": "proj-phishing-dashboard",
-      "title": "Phishing Simulation Dashboard",
-      "status": "live",
-      "initials": "PD",
-      "description": "A dashboard for running authorized phishing awareness campaigns for a student organization, tracking click and report rates to measure security awareness over time.",
-      "tech": ["Node.js", "Express", "PostgreSQL", "Chart.js"],
-      "link": "https://github.com/example/phishing-dashboard"
+      "initials": "BK",
+      "description": "Co-founded and built the operations platform for Bolik, a student-run bubble tea shop at UWC Dilijan used by 47.66% of students throughout the 2025–2026 school year and still in use by current students and leaders.",
+      "tech": [
+        "Full-stack development · Product ownership · Team leadership"
+      ],
+      "link": "https://lokodayte.github.io/Bolik-V2/login.html",
+      "id": "project-0914cn"
     }
   ],
   "skills": [
     {
       "group": "Security & Networking",
-      "items": ["Network Security", "Linux Hardening", "Wireshark", "Nmap", "Burp Suite", "SIEM / Log Analysis", "Vulnerability Assessment"]
+      "items": [
+        "Network Security",
+        "Linux Hardening",
+        "Wireshark",
+        "Nmap",
+        "Burp Suite",
+        "SIEM / Log Analysis",
+        "Vulnerability Assessment"
+      ]
     },
     {
       "group": "Languages & Tools",
-      "items": ["Python", "Bash", "JavaScript", "SQL", "Git", "Docker"]
+      "items": [
+        "Python",
+        "Bash",
+        "JavaScript",
+        "SQL",
+        "Git",
+        "Docker"
+      ]
     },
     {
       "group": "Currently Learning",
-      "items": ["Malware Analysis", "Cloud Security (AWS)", "Security+ Exam Prep", "Digital Forensics"]
+      "items": [
+        "Malware Analysis",
+        "Cloud Security (AWS)",
+        "Security+ Exam Prep",
+        "Digital Forensics"
+      ]
     }
   ],
   "timeline": [
@@ -131,14 +157,30 @@
       "link": "https://www.credly.com/example-google-cyber"
     }
   ],
-  "interests": ["Capture the Flag", "Chess", "Basketball", "Photography", "Travel", "Open Source"],
+  "interests": [
+    "Capture the Flag",
+    "Chess",
+    "Basketball",
+    "Photography",
+    "Travel",
+    "Open Source"
+  ],
   "contact": {
     "email": "boris.sargsyan@example.com",
     "resume": "assets/resume-placeholder.pdf",
     "socials": [
-      { "label": "GitHub", "href": "https://github.com/example" },
-      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/example" },
-      { "label": "TryHackMe", "href": "https://tryhackme.com/p/example" }
+      {
+        "label": "GitHub",
+        "href": "https://github.com/example"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/example"
+      },
+      {
+        "label": "TryHackMe",
+        "href": "https://tryhackme.com/p/example"
+      }
     ]
   }
 }
