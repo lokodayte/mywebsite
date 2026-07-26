@@ -368,7 +368,7 @@
       // holds up the preview's first paint — it just falls back to the
       // system font stack until/unless the webfont arrives.
       '<link rel="preconnect" href="https://fonts.googleapis.com">' +
-      '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" ' +
+      '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" ' +
       "rel=\"stylesheet\" media=\"print\" onload=\"this.media='all'\">" +
       "</head><body>" +
       '<header class="site-header"><nav id="nav-root" class="nav container"></nav></header>' +
@@ -981,14 +981,20 @@
       },
     });
 
-    subheading(container, "Terminal typing lines");
-    createStringListEditor({
+    subheading(container, "Snapshot facts");
+    createObjectListEditor({
       container: container,
       getItems: function () {
-        return h.typingStrings;
+        return h.highlights;
       },
-      itemNounSingular: "line",
-      placeholder: "e.g. nmap -sV target.local",
+      itemNounSingular: "fact",
+      labelFn: function (i) {
+        return i.label + " — " + i.value;
+      },
+      fields: [
+        { key: "label", label: "Label", required: true, placeholder: "e.g. Education" },
+        { key: "value", label: "Value", required: true, placeholder: "e.g. B.S. Cybersecurity, Marist University" },
+      ],
     });
 
     subheading(container, "Call-to-action buttons");

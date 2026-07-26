@@ -1,6 +1,6 @@
-# Portfolio Site
+# Portfolio Site — Boris Sargsyan
 
-A static, dark "security console"-themed personal portfolio, built for GitHub Pages with **no backend, no database, and no build step** — plain HTML, CSS, and JS.
+A static, light "soft slate"-themed personal portfolio for Boris Sargsyan, a cybersecurity student, built for GitHub Pages with **no backend, no database, and no build step** — plain HTML, CSS, and JS.
 
 All content lives in [`data/content.json`](data/content.json) and is rendered into the page at load time. You can edit that file directly, or use the browser-based admin panel at [`admin.html`](admin.html) to edit, add, and delete content without ever touching code.
 
@@ -13,7 +13,7 @@ css/style.css         Shared design system used by both the public site and admi
 css/admin.css          Admin-panel-only layout/styles
 js/render.js           Shared rendering functions (renderHero, renderProjects, ...) used by
                         both index.html and admin.html's live preview
-js/main.js             Public site: fetch + render + nav/scroll + hero typing effect
+js/main.js             Public site: fetch + render + nav/scroll + gentle scroll-reveal
 js/admin.js             Admin panel: auth, GitHub API calls, forms, live preview
 data/content.json        All editable site content
 assets/                    Uploaded/placeholder images and résumé PDF
@@ -64,4 +64,4 @@ That said, there's no reason to advertise it — **don't link to `/admin.html` f
 
 ## Customizing the design
 
-Colors, fonts, and spacing are defined as CSS custom properties at the top of `css/style.css` — change the values there to re-theme the whole site (and the admin preview, which shares the same stylesheet).
+Colors, fonts, and spacing are defined as CSS custom properties at the top of `css/style.css` — change the values there to re-theme the whole site (and the admin preview, which shares the same stylesheet). The current theme ("soft slate") uses a tinted blue-gray page background, white card surfaces, navy as the primary accent, and a muted gold used sparingly for the availability status badge — headings are set in Fraunces, body copy in Inter, and small mono labels in IBM Plex Mono.

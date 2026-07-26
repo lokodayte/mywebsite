@@ -1,84 +1,84 @@
 {
   "hero": {
-    "name": "Elina Mosoian",
+    "name": "Boris Sargsyan",
     "role": "Cybersecurity Student",
-    "tagline": "Breaking things (on purpose) to learn how to defend them.",
-    "typingStrings": [
-      "whoami",
-      "nmap -sV target.local",
-      "sudo defend --always"
-    ],
-    "intro": "Third-year cybersecurity student focused on network defense, offensive security fundamentals, and secure application design. I build labs, break my own code, and write up what I learn.",
+    "tagline": "Studying how systems break so I can help build ones that don't.",
+    "intro": "Cybersecurity student at Marist University focused on network security, secure system design, and applied penetration testing. Previously completed the IB Diploma at UWC Dilijan, where a school network security project first got me hooked on this field.",
     "status": "Available for internships",
     "ctas": [
       { "label": "View Projects", "href": "#projects", "style": "primary" },
       { "label": "Contact Me", "href": "#contact", "style": "secondary" }
+    ],
+    "highlights": [
+      { "label": "Education", "value": "B.S. Cybersecurity, Marist University" },
+      { "label": "Focus", "value": "Network Security & Penetration Testing" },
+      { "label": "Location", "value": "Poughkeepsie, NY" }
     ]
   },
   "about": {
     "heading": "About",
     "paragraphs": [
-      "I'm a cybersecurity student who got into this field after setting up a home lab just to see if I could break it. That curiosity turned into a habit of building vulnerable environments, patching them, and documenting the process.",
-      "My focus areas right now are network security, Linux hardening, and web application security. I'm working toward a career in security operations or penetration testing, and I spend a lot of my free time on CTFs and personal security tooling."
+      "I'm a cybersecurity student at Marist University with a growing focus on network defense, secure system design, and offensive security fundamentals. My interest in this field started at UWC Dilijan, where I helped audit and harden the school's own network as an independent project.",
+      "Since then I've kept building: home lab environments, small security tools, and write-ups documenting what I learn along the way. I'm currently preparing for entry-level certifications and looking for an internship where I can apply what I've built in a real security team."
     ],
     "photo": "assets/profile-placeholder.svg",
     "stats": [
-      { "label": "CTFs completed", "value": "20+" },
-      { "label": "Certifications", "value": "3" },
-      { "label": "Lab hours logged", "value": "300+" },
-      { "label": "GitHub repos", "value": "15" }
+      { "label": "CTFs completed", "value": "15+" },
+      { "label": "Certifications", "value": "2" },
+      { "label": "Lab hours logged", "value": "250+" },
+      { "label": "GitHub repos", "value": "12" }
     ]
   },
   "projects": [
     {
-      "id": "proj-homelab-siem",
-      "title": "Home Lab SIEM",
-      "status": "live",
-      "initials": "HL",
-      "description": "A self-hosted Security Information and Event Management setup using the Elastic stack, ingesting logs from a small virtualized network to practice detection engineering.",
-      "tech": ["Elastic Stack", "Proxmox", "Sysmon", "Suricata"],
-      "link": "https://github.com/example/homelab-siem"
-    },
-    {
-      "id": "proj-vuln-webapp",
-      "title": "Intentionally Vulnerable Web App",
-      "status": "source",
-      "initials": "VW",
-      "description": "A deliberately vulnerable Flask application built to practice and teach OWASP Top 10 exploitation and remediation, complete with writeups for each vulnerability class.",
-      "tech": ["Python", "Flask", "SQLite", "Docker"],
-      "link": "https://github.com/example/vuln-webapp"
-    },
-    {
       "id": "proj-network-scanner",
-      "title": "Async Network Scanner",
-      "status": "demo",
-      "initials": "NS",
-      "description": "A lightweight asynchronous port and service scanner written in Python, built as a faster learning alternative to understand how tools like nmap work under the hood.",
-      "tech": ["Python", "asyncio", "Sockets"],
-      "link": "https://github.com/example/async-scanner"
+      "title": "Campus Network Vulnerability Scanner",
+      "status": "live",
+      "initials": "NV",
+      "description": "A Python tool that scans a lab network for outdated services and common misconfigurations, then generates a plain-language remediation report for non-technical staff.",
+      "tech": ["Python", "Nmap", "Sockets", "Docker"],
+      "link": "https://github.com/example/campus-network-scanner"
     },
     {
-      "id": "proj-phishing-sim",
-      "title": "Phishing Awareness Simulator",
+      "id": "proj-vulnerable-login",
+      "title": "Intentionally Vulnerable Login Portal",
+      "status": "source",
+      "initials": "LP",
+      "description": "A deliberately vulnerable login application built to practice and teach common web authentication flaws (SQL injection, broken session handling, weak password policies) with accompanying fixes.",
+      "tech": ["Flask", "SQLite", "Python", "OWASP Top 10"],
+      "link": "https://github.com/example/vulnerable-login-portal"
+    },
+    {
+      "id": "proj-breach-checker",
+      "title": "Password Strength & Breach Checker",
+      "status": "demo",
+      "initials": "PB",
+      "description": "A client-side tool that scores password strength and checks it against known breach datasets using k-anonymity, without ever sending the full password over the network.",
+      "tech": ["JavaScript", "HaveIBeenPwned API", "Crypto API"],
+      "link": "https://github.com/example/breach-checker"
+    },
+    {
+      "id": "proj-phishing-dashboard",
+      "title": "Phishing Simulation Dashboard",
       "status": "live",
-      "initials": "PS",
-      "description": "A campus club project: a controlled phishing simulation platform used to run authorized awareness campaigns and generate reporting-rate analytics for student orgs.",
-      "tech": ["Node.js", "Express", "PostgreSQL"],
-      "link": "https://github.com/example/phishing-sim"
+      "initials": "PD",
+      "description": "A dashboard for running authorized phishing awareness campaigns for a student organization, tracking click and report rates to measure security awareness over time.",
+      "tech": ["Node.js", "Express", "PostgreSQL", "Chart.js"],
+      "link": "https://github.com/example/phishing-dashboard"
     }
   ],
   "skills": [
     {
       "group": "Security & Networking",
-      "items": ["Network Security", "Linux Hardening", "Wireshark", "Nmap", "Burp Suite", "SIEM / Log Analysis", "Incident Response Basics"]
+      "items": ["Network Security", "Linux Hardening", "Wireshark", "Nmap", "Burp Suite", "SIEM / Log Analysis", "Vulnerability Assessment"]
     },
     {
       "group": "Languages & Tools",
-      "items": ["Python", "Bash", "JavaScript", "SQL", "Git", "Docker", "Metasploit"]
+      "items": ["Python", "Bash", "JavaScript", "SQL", "Git", "Docker"]
     },
     {
       "group": "Currently Learning",
-      "items": ["Malware Analysis", "Cloud Security (AWS)", "OSCP Prep", "Reverse Engineering"]
+      "items": ["Malware Analysis", "Cloud Security (AWS)", "Security+ Exam Prep", "Digital Forensics"]
     }
   ],
   "timeline": [
@@ -87,32 +87,32 @@
       "start": "2023-08",
       "end": "Present",
       "title": "B.S. Cybersecurity",
-      "org": "State University",
-      "description": "Coursework in network security, applied cryptography, and systems administration. Active member of the Cyber Defense Club."
+      "org": "Marist University",
+      "description": "Coursework in network security, applied cryptography, and systems administration. Active member of the Cybersecurity Club."
     },
     {
       "id": "tl-2",
-      "start": "2024-05",
+      "start": "2024-06",
       "end": "2024-08",
-      "title": "Security Operations Intern",
-      "org": "Local IT Managed Services Co.",
-      "description": "Monitored SIEM alerts, triaged phishing reports, and assisted with quarterly vulnerability scans across client environments."
+      "title": "IT Security Intern",
+      "org": "Regional Managed Services Provider",
+      "description": "Assisted with quarterly vulnerability scans, monitored SIEM alerts, and helped triage phishing reports across small-business client environments."
     },
     {
       "id": "tl-3",
       "start": "2023-09",
       "end": "Present",
-      "title": "Cyber Defense Club — CTF Team Lead",
-      "org": "State University",
-      "description": "Organize weekly CTF practice sessions and represent the university at regional collegiate cybersecurity competitions."
+      "title": "Cybersecurity Club — Member",
+      "org": "Marist University",
+      "description": "Participate in weekly CTF practice and help organize introductory security workshops for new students."
     },
     {
       "id": "tl-4",
-      "start": "2022-08",
+      "start": "2021-08",
       "end": "2023-06",
-      "title": "High School Diploma",
-      "org": "Lincoln High School",
-      "description": "Graduated with honors; led the introductory coding club and completed an independent study in networking fundamentals."
+      "title": "IB Diploma",
+      "org": "UWC Dilijan",
+      "description": "Completed the International Baccalaureate Diploma. Led an independent project auditing and hardening the school's network, which sparked an interest in cybersecurity."
     }
   ],
   "certificates": [
@@ -120,27 +120,20 @@
       "id": "cert-1",
       "name": "CompTIA Security+",
       "issuer": "CompTIA",
-      "date": "2024-11",
+      "date": "2024-10",
       "link": "https://www.credly.com/example-security-plus"
     },
     {
       "id": "cert-2",
       "name": "Google Cybersecurity Professional Certificate",
       "issuer": "Google / Coursera",
-      "date": "2024-05",
+      "date": "2024-03",
       "link": "https://www.credly.com/example-google-cyber"
-    },
-    {
-      "id": "cert-3",
-      "name": "Introduction to Cyber Security",
-      "issuer": "Cisco Networking Academy",
-      "date": "2023-12",
-      "link": "https://www.credly.com/example-cisco-intro"
     }
   ],
-  "interests": ["Capture the Flag", "Home Labbing", "Chess", "Rock Climbing", "Open Source", "Retro Hardware"],
+  "interests": ["Capture the Flag", "Chess", "Basketball", "Photography", "Travel", "Open Source"],
   "contact": {
-    "email": "elinamosoian@gmail.com",
+    "email": "boris.sargsyan@example.com",
     "resume": "assets/resume-placeholder.pdf",
     "socials": [
       { "label": "GitHub", "href": "https://github.com/example" },

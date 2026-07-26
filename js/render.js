@@ -34,13 +34,13 @@
   function statusLabel(status) {
     switch (status) {
       case "live":
-        return "LIVE";
+        return "Live";
       case "demo":
-        return "DEMO";
+        return "Demo";
       case "source":
-        return "SOURCE";
+        return "Source";
       default:
-        return escapeHtml(status || "").toUpperCase();
+        return escapeHtml(status || "");
     }
   }
 
@@ -63,8 +63,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#timeline">Log</a></li>
-        <li><a href="#certificates">Certs</a></li>
+        <li><a href="#timeline">Experience</a></li>
+        <li><a href="#certificates">Certificates</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     `;
@@ -73,16 +73,23 @@
   function renderHero(data) {
     const hero = (data && data.hero) || {};
     const ctas = Array.isArray(hero.ctas) ? hero.ctas : [];
-    const firstTyping =
-      Array.isArray(hero.typingStrings) && hero.typingStrings.length
-        ? hero.typingStrings[0]
-        : "";
+    const highlights = Array.isArray(hero.highlights) ? hero.highlights : [];
 
     const ctaHtml = ctas
       .map(
         (cta) => `
         <a class="btn btn--${cta.style === "primary" ? "primary" : "secondary"}"
            ${externalLinkAttrs(cta.href)}>${escapeHtml(cta.label)}</a>`
+      )
+      .join("");
+
+    const highlightsHtml = highlights
+      .map(
+        (h) => `
+        <li class="snapshot-card__row">
+          <span class="snapshot-card__label">${escapeHtml(h.label)}</span>
+          <span class="snapshot-card__value">${escapeHtml(h.value)}</span>
+        </li>`
       )
       .join("");
 
@@ -99,20 +106,9 @@
           <p class="hero-intro">${escapeHtml(hero.intro || "")}</p>
           <div class="hero-ctas">${ctaHtml}</div>
         </div>
-        <div class="terminal-panel" aria-hidden="true">
-          <div class="terminal-panel__bar">
-            <span class="terminal-dot terminal-dot--red"></span>
-            <span class="terminal-dot terminal-dot--amber"></span>
-            <span class="terminal-dot terminal-dot--teal"></span>
-            <span class="terminal-panel__title">profile.log</span>
-          </div>
-          <div class="terminal-panel__body">
-            <p class="terminal-line">
-              <span class="terminal-prompt">guest@portfolio:~$</span>
-              <span id="heroTyping" class="typing-text">${escapeHtml(firstTyping)}</span
-              ><span class="typing-cursor"></span>
-            </p>
-          </div>
+        <div class="snapshot-card">
+          <p class="snapshot-card__eyebrow">Snapshot</p>
+          <ul class="snapshot-card__list">${highlightsHtml}</ul>
         </div>
       </div>
     `;
@@ -141,10 +137,10 @@
       ? `<img class="about-photo__img" src="${escapeHtml(about.photo)}" alt="Portrait photo of ${escapeHtml(
           (data && data.hero && data.hero.name) || ""
         )}" loading="lazy" />`
-      : `<div class="about-photo__placeholder" role="img" aria-label="No photo provided">NO_IMAGE</div>`;
+      : `<div class="about-photo__placeholder" role="img" aria-label="No photo provided">No photo yet</div>`;
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">01_</span>${escapeHtml(
+      <h2 class="section-heading"><span class="section-heading__tag">01</span>${escapeHtml(
         about.heading || "About"
       )}</h2>
       <div class="about-grid">
@@ -161,7 +157,7 @@
     const projects = Array.isArray(data && data.projects) ? data.projects : [];
     if (!projects.length) {
       return `
-        <h2 class="section-heading"><span class="section-heading__tag">02_</span>Projects</h2>
+        <h2 class="section-heading"><span class="section-heading__tag">02</span>Projects</h2>
         <p class="empty-state">No projects published yet.</p>
       `;
     }
@@ -189,7 +185,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">02_</span>Projects</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">02</span>Projects</h2>
       <div class="card-grid">${cards}</div>
     `;
   }
@@ -209,7 +205,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">03_</span>Skills</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">03</span>Skills</h2>
       <div class="skill-groups">${groupsHtml}</div>
     `;
   }
@@ -221,21 +217,21 @@
     const itemsHtml = sorted
       .map(
         (e) => `
-        <li class="log-entry">
-          <div class="log-entry__marker" aria-hidden="true"></div>
-          <div class="log-entry__body">
-            <p class="log-entry__date">${escapeHtml(e.start || "")} &ndash; ${escapeHtml(e.end || "")}</p>
-            <h3 class="log-entry__title">${escapeHtml(e.title || "")}</h3>
-            <p class="log-entry__org">${escapeHtml(e.org || "")}</p>
-            <p class="log-entry__desc">${escapeHtml(e.description || "")}</p>
+        <li class="timeline-entry">
+          <div class="timeline-entry__marker" aria-hidden="true"></div>
+          <div class="timeline-entry__body">
+            <p class="timeline-entry__date">${escapeHtml(e.start || "")} &ndash; ${escapeHtml(e.end || "")}</p>
+            <h3 class="timeline-entry__title">${escapeHtml(e.title || "")}</h3>
+            <p class="timeline-entry__org">${escapeHtml(e.org || "")}</p>
+            <p class="timeline-entry__desc">${escapeHtml(e.description || "")}</p>
           </div>
         </li>`
       )
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">04_</span>Education &amp; Experience</h2>
-      <ol class="log-timeline">${itemsHtml}</ol>
+      <h2 class="section-heading"><span class="section-heading__tag">04</span>Education &amp; Experience</h2>
+      <ol class="timeline-list">${itemsHtml}</ol>
     `;
   }
 
@@ -243,7 +239,7 @@
     const certs = Array.isArray(data && data.certificates) ? data.certificates : [];
     if (!certs.length) {
       return `
-        <h2 class="section-heading"><span class="section-heading__tag">05_</span>Certificates</h2>
+        <h2 class="section-heading"><span class="section-heading__tag">05</span>Certificates</h2>
         <p class="empty-state">No certificates published yet.</p>
       `;
     }
@@ -265,7 +261,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">05_</span>Certificates</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">05</span>Certificates</h2>
       <div class="card-grid card-grid--certs">${cardsHtml}</div>
     `;
   }
@@ -274,7 +270,7 @@
     const interests = Array.isArray(data && data.interests) ? data.interests : [];
     const pills = interests.map((i) => `<li class="pill">${escapeHtml(i)}</li>`).join("");
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">06_</span>Interests</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">06</span>Interests</h2>
       <ul class="pill-row">${pills}</ul>
     `;
   }
@@ -289,7 +285,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">07_</span>Contact</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">07</span>Contact</h2>
       <div class="contact-grid">
         <div class="contact-block">
           ${
