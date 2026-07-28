@@ -263,6 +263,24 @@
     });
   }
 
+  // Shared upload path for any "attach a file to a repeatable item" field
+  // (research papers, certificate files, ...): base64-encodes the file,
+  // fetches the target path's current sha if it already exists (so
+  // re-uploading the same filename overwrites it instead of erroring), then
+  // PUTs it via the Contents API. Resolves with the path that was written.
+  function uploadFileToRepo(file, targetPath, label) {
+    return file.arrayBuffer().then(function (buffer) {
+      var base64 = arrayBufferToBase64(buffer);
+      return getFileShaIfExists(targetPath).then(function (sha) {
+        var message =
+          (sha ? "Update " : "Add ") + (label || "file") + " via admin panel — " + new Date().toISOString();
+        return putContentFile(targetPath, base64, sha, message).then(function () {
+          return targetPath;
+        });
+      });
+    });
+  }
+
   // -----------------------------------------------------------------------
   // Base64 helpers (UTF-8 safe)
   // -----------------------------------------------------------------------
@@ -306,6 +324,14 @@
       .replace(/\.[a-z0-9]+$/i, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
+  }
+
+  // "Cert Screenshot.PNG" -> ".png" — preserves the uploaded file's real
+  // extension so certificate uploads (which can be a PDF or an image) don't
+  // all get forced to ".pdf" the way research papers do.
+  function getFileExtension(name) {
+    var match = /\.[a-z0-9]+$/i.exec(name || "");
+    return match ? match[0].toLowerCase() : "";
   }
 
   function isValidLink(value) {
@@ -415,7 +441,7 @@
       '<section class="section"><div id="interests-root" class="container"></div></section>' +
       '<section class="section"><div id="contact-root" class="container"></div></section>' +
       "</main>" +
-      '<footer class="site-footer"><p class="mono">Live preview</p></footer>' +
+      '<footer class="site-footer"><p class="mono"><span id="footer-mark-root"></span>Live preview</p></footer>' +
       "</body></html>";
 
     dom.previewFrame.srcdoc = skeleton;
@@ -811,7 +837,13 @@
           fileInput.accept = f.accept || "application/pdf";
           var statusEl = document.createElement("span");
           statusEl.className = "asset-upload__status";
+          var removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "btn btn--ghost btn--sm";
+          removeBtn.textContent = "Remove file";
+          removeBtn.hidden = !inputEl.value;
           uploadRow.appendChild(fileInput);
+          uploadRow.appendChild(removeBtn);
           uploadRow.appendChild(statusEl);
           fieldWrap.appendChild(uploadRow);
 
@@ -820,27 +852,28 @@
             if (!file) return;
             statusEl.textContent = "Uploading " + file.name + "…";
             statusEl.className = "asset-upload__status publish-status--busy";
-            var path = (f.uploadDir || "assets/") + slugifyFilename(file.name) + ".pdf";
+            var ext = getFileExtension(file.name) || ".pdf";
+            var path = (f.uploadDir || "assets/") + slugifyFilename(file.name) + ext;
 
-            file
-              .arrayBuffer()
-              .then(function (buffer) {
-                var base64 = arrayBufferToBase64(buffer);
-                return getFileShaIfExists(path).then(function (sha) {
-                  var message =
-                    (sha ? "Update" : "Add") + " research paper via admin panel — " + new Date().toISOString();
-                  return putContentFile(path, base64, sha, message);
-                });
-              })
-              .then(function () {
-                inputEl.value = path;
-                statusEl.textContent = "Uploaded ✓ — " + path;
+            uploadFileToRepo(file, path, f.uploadLabel)
+              .then(function (finalPath) {
+                inputEl.value = finalPath;
+                statusEl.textContent = "Uploaded ✓ — " + finalPath;
                 statusEl.className = "asset-upload__status publish-status--ok";
+                removeBtn.hidden = false;
               })
               .catch(function (err) {
                 statusEl.textContent = describeApiError(err, "Upload failed");
                 statusEl.className = "asset-upload__status publish-status--error";
               });
+          });
+
+          removeBtn.addEventListener("click", function () {
+            inputEl.value = "";
+            fileInput.value = "";
+            statusEl.textContent = "";
+            statusEl.className = "asset-upload__status";
+            removeBtn.hidden = true;
           });
         }
 
@@ -1229,6 +1262,7 @@
           placeholder: "assets/research/your-paper.pdf",
           accept: "application/pdf",
           uploadDir: "assets/research/",
+          uploadLabel: "research paper",
         },
       ],
     });
@@ -1280,7 +1314,11 @@
   }
 
   function buildCertificatesPanel(container) {
-    panelHeading(container, "Certificates", "Shown as cards with a credential link.");
+    panelHeading(
+      container,
+      "Certificates",
+      "Shown as cards with a credential file hosted directly in this repo — PDF or image, no external link needed."
+    );
     createObjectListEditor({
       container: container,
       getItems: function () {
@@ -1297,7 +1335,15 @@
         { key: "name", label: "Certificate name", required: true },
         { key: "issuer", label: "Issuer", required: true },
         { key: "date", label: "Date", required: true, placeholder: "YYYY-MM" },
-        { key: "link", label: "View credential link", type: "url" },
+        {
+          key: "file",
+          label: "Credential file (PDF or image)",
+          type: "file",
+          placeholder: "assets/certificates/your-certificate.pdf",
+          accept: ".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg",
+          uploadDir: "assets/certificates/",
+          uploadLabel: "certificate",
+        },
       ],
     });
   }

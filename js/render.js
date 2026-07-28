@@ -65,17 +65,36 @@
 
   // ---- Section renderers -------------------------------------------------
 
-  function renderNav(data) {
-    const name = data && data.hero && data.hero.name ? data.hero.name : "Portfolio";
-    const initials = name
+  function getInitials(name) {
+    return name
       .split(/\s+/)
       .map((w) => w.charAt(0))
       .join("")
       .slice(0, 2)
       .toUpperCase();
+  }
+
+  // Rounded-square monogram badge, matching the "soft slate" palette. Colors
+  // reference the page's own CSS custom properties (not hardcoded hex) so it
+  // always matches whatever theme is active — this only works because the
+  // SVG is inlined into the document, not a standalone file (see
+  // favicon.svg, which can't read page CSS and hardcodes the same colors).
+  function logoSvg(initials, size, extraClass) {
+    const classAttr = extraClass ? ` class="${extraClass}"` : "";
+    return `<svg${classAttr} width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <rect x="0" y="0" width="64" height="64" rx="14" fill="var(--accent)" />
+        <text x="32" y="41" font-family="var(--font-heading)" font-size="24" fill="var(--gold)" text-anchor="middle">${escapeHtml(
+          initials || "//"
+        )}</text>
+      </svg>`;
+  }
+
+  function renderNav(data) {
+    const name = data && data.hero && data.hero.name ? data.hero.name : "Portfolio";
+    const initials = getInitials(name);
     return `
       <a class="nav-brand" href="#hero" aria-label="${escapeHtml(name)} — home">
-        <span class="nav-brand__mark">${escapeHtml(initials || "//")}</span>
+        ${logoSvg(initials, 36, "nav-brand__mark")}
         <span class="nav-brand__name">${escapeHtml(name)}</span>
       </a>
       <ul class="nav-links">
@@ -88,6 +107,11 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     `;
+  }
+
+  function renderFooterMark(data) {
+    const name = data && data.hero && data.hero.name ? data.hero.name : "Portfolio";
+    return logoSvg(getInitials(name), 24, "footer-mark");
   }
 
   function renderHero(data) {
@@ -306,8 +330,8 @@
           c.date || ""
         )}</span></p>
           ${
-            c.link
-              ? `<a class="cert-card__link" ${externalLinkAttrs(c.link)}>View credential <span aria-hidden="true">&rarr;</span></a>`
+            c.file
+              ? `<a class="cert-card__link" ${fileLinkAttrs(c.file)}>View credential <span aria-hidden="true">&rarr;</span></a>`
               : ""
           }
         </article>`
@@ -373,6 +397,7 @@
       "certificates-root": renderCertificates,
       "interests-root": renderInterests,
       "contact-root": renderContact,
+      "footer-mark-root": renderFooterMark,
     };
     Object.keys(map).forEach((id) => {
       const el = doc.getElementById(id);
