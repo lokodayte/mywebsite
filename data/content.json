@@ -370,6 +370,22 @@
       "category": "Programming",
       "file": "assets/certificates/8ba2aecd-f34c-4d67-a88d-dbee661476c3.png",
       "id": "certificate-zygm24"
+    },
+    {
+      "name": "Cybersecurity Fundamentals",
+      "issuer": "IBM",
+      "date": "2026-06",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/ibmdesign20260728-20-2zennt-page-0001.jpg",
+      "id": "certificate-2k9key"
+    },
+    {
+      "name": "JavaScript for Beginners",
+      "issuer": "Mindluster",
+      "date": "2024-02",
+      "category": "Programming",
+      "file": "assets/certificates/8924022831.jpg",
+      "id": "certificate-ze9787"
     }
   ],
   "interests": [
