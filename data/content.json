@@ -160,6 +160,7 @@
       "name": "CompTIA Security+",
       "issuer": "CompTIA",
       "date": "2024-10",
+      "category": "Cybersecurity",
       "link": "https://www.credly.com/example-security-plus"
     },
     {
@@ -167,7 +168,37 @@
       "name": "Google Cybersecurity Professional Certificate",
       "issuer": "Google / Coursera",
       "date": "2024-03",
+      "category": "Cybersecurity",
       "link": "https://www.credly.com/example-google-cyber"
+    },
+    {
+      "id": "cert-3",
+      "name": "Network Ethical Hacking for Beginners Using Kali Linux",
+      "issuer": "Udemy",
+      "date": "2024",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/network-ethical-hacking-udemy.pdf"
+    },
+    {
+      "id": "cert-4",
+      "name": "Python 3 Certificate",
+      "issuer": "Sololearn",
+      "date": "2023",
+      "category": "Programming"
+    },
+    {
+      "id": "cert-5",
+      "name": "JavaScript Certificate",
+      "issuer": "Sololearn",
+      "date": "2023",
+      "category": "Programming"
+    },
+    {
+      "id": "cert-6",
+      "name": "FPV Drone Building & Piloting",
+      "issuer": "Udemy",
+      "date": "2022",
+      "category": "Drone & Hardware"
     }
   ],
   "interests": [

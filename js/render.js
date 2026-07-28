@@ -313,6 +313,17 @@
     `;
   }
 
+  function isImageFile(path) {
+    return /\.(png|jpe?g)$/i.test(path || "");
+  }
+
+  function pdfThumbIcon() {
+    return `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2.5h8l4 4v15H6z" />
+        <path d="M14 2.5v4h4" />
+      </svg>`;
+  }
+
   function renderCertificates(data) {
     const certs = Array.isArray(data && data.certificates) ? data.certificates : [];
     if (!certs.length) {
@@ -321,27 +332,179 @@
         <p class="empty-state">No certificates published yet.</p>
       `;
     }
+
+    const categories = [];
+    certs.forEach((c) => {
+      const cat = (c.category || "").trim();
+      if (cat && categories.indexOf(cat) === -1) categories.push(cat);
+    });
+
+    const filtersHtml = categories.length
+      ? `
+      <div class="cert-filters" role="group" aria-label="Filter certificates by category">
+        <button type="button" class="filter-pill is-active" data-category="all">All</button>
+        ${categories
+          .map(
+            (cat) =>
+              `<button type="button" class="filter-pill" data-category="${escapeHtml(cat)}">${escapeHtml(
+                cat
+              )}</button>`
+          )
+          .join("")}
+      </div>`
+      : "";
+
     const cardsHtml = certs
-      .map(
-        (c) => `
-        <article class="card cert-card">
+      .map((c) => {
+        const hasFile = !!c.file;
+        let thumbHtml = "";
+        if (hasFile && isImageFile(c.file)) {
+          thumbHtml = `<div class="cert-card__thumb"><img class="cert-card__thumb-img" src="${escapeHtml(
+            c.file
+          )}" alt="" loading="lazy" /></div>`;
+        } else if (hasFile) {
+          thumbHtml = `<div class="cert-card__thumb cert-card__thumb--pdf">${pdfThumbIcon()}</div>`;
+        }
+        const catAttr = c.category ? ` data-category="${escapeHtml(c.category)}"` : "";
+        const fileAttr = hasFile ? ` data-file="${escapeHtml(c.file)}"` : "";
+
+        return `
+        <article class="card cert-card${hasFile ? " cert-card--clickable" : ""}"${catAttr}${fileAttr}>
+          ${thumbHtml}
           <h3 class="cert-card__name">${escapeHtml(c.name || "")}</h3>
           <p class="cert-card__meta">${escapeHtml(c.issuer || "")} &middot; <span class="mono">${escapeHtml(
           c.date || ""
         )}</span></p>
           ${
-            c.file
-              ? `<a class="cert-card__link" ${fileLinkAttrs(c.file)}>View credential <span aria-hidden="true">&rarr;</span></a>`
+            hasFile
+              ? `<button type="button" class="cert-card__link" data-file="${escapeHtml(
+                  c.file
+                )}">View credential <span aria-hidden="true">&rarr;</span></button>`
               : ""
           }
-        </article>`
-      )
+        </article>`;
+      })
       .join("");
 
     return `
       <h2 class="section-heading"><span class="section-heading__tag">06</span>Certificates</h2>
-      <div class="card-grid card-grid--certs">${cardsHtml}</div>
+      ${filtersHtml}
+      <div class="card-grid card-grid--certs" id="certGrid">${cardsHtml}</div>
+      <div class="lightbox" id="certLightbox" hidden>
+        <div class="lightbox__overlay" data-lightbox-close></div>
+        <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Certificate preview">
+          <button type="button" class="lightbox__close" data-lightbox-close aria-label="Close">&times;</button>
+          <div class="lightbox__body"></div>
+          <a class="lightbox__external" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">&#8599;</span></a>
+        </div>
+      </div>
     `;
+  }
+
+  // ---- Certificate filter pills + lightbox (shared by index.html and the
+  // admin preview iframe — wired up automatically inside renderAll) --------
+
+  const lastFocusedByDoc = typeof WeakMap !== "undefined" ? new WeakMap() : null;
+
+  function openLightbox(doc, filePath, triggerEl) {
+    const lightbox = doc.getElementById("certLightbox");
+    if (!lightbox || !filePath) return;
+    const body = lightbox.querySelector(".lightbox__body");
+    const externalLink = lightbox.querySelector(".lightbox__external");
+    if (body) {
+      body.innerHTML = isImageFile(filePath)
+        ? `<img class="lightbox__image" src="${escapeHtml(filePath)}" alt="Certificate credential" />`
+        : `<iframe class="lightbox__frame" src="${escapeHtml(filePath)}" title="Certificate credential document"></iframe>`;
+    }
+    if (externalLink) externalLink.setAttribute("href", filePath);
+    if (lastFocusedByDoc) lastFocusedByDoc.set(doc, triggerEl || doc.activeElement);
+    lightbox.hidden = false;
+    const closeBtn = lightbox.querySelector(".lightbox__close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeLightbox(doc) {
+    const lightbox = doc.getElementById("certLightbox");
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.hidden = true;
+    const body = lightbox.querySelector(".lightbox__body");
+    if (body) body.innerHTML = "";
+    const lastFocused = lastFocusedByDoc ? lastFocusedByDoc.get(doc) : null;
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      try {
+        lastFocused.focus();
+      } catch (e) {
+        // Element may no longer be in the document (e.g. content re-rendered
+        // while the lightbox was open) — nothing sensible to do about it.
+      }
+    }
+  }
+
+  function wireCertificateInteractions(doc) {
+    const grid = doc.getElementById("certGrid");
+    const lightbox = doc.getElementById("certLightbox");
+    const filters = doc.querySelector(".cert-filters");
+
+    if (filters && grid) {
+      const pills = Array.prototype.slice.call(filters.querySelectorAll(".filter-pill"));
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          pills.forEach((p) => p.classList.remove("is-active"));
+          pill.classList.add("is-active");
+          const category = pill.getAttribute("data-category");
+          grid.querySelectorAll(".cert-card").forEach((card) => {
+            card.hidden = category !== "all" && card.getAttribute("data-category") !== category;
+          });
+        });
+      });
+    }
+
+    if (grid) {
+      grid.addEventListener("click", (e) => {
+        const card = e.target.closest(".cert-card--clickable");
+        if (!card) return;
+        const file = card.getAttribute("data-file");
+        if (file) openLightbox(doc, file, e.target);
+      });
+    }
+
+    if (lightbox) {
+      Array.prototype.forEach.call(lightbox.querySelectorAll("[data-lightbox-close]"), (el) => {
+        el.addEventListener("click", () => closeLightbox(doc));
+      });
+
+      // Wired exactly once per document (guarded by a flag on the document
+      // itself) so repeated re-renders — the admin preview re-renders on
+      // every keystroke — never pile up duplicate listeners.
+      if (!doc.__certLightboxKeyWired) {
+        doc.__certLightboxKeyWired = true;
+        doc.addEventListener("keydown", (e) => {
+          const lb = doc.getElementById("certLightbox");
+          if (!lb || lb.hidden) return;
+          if (e.key === "Escape") {
+            closeLightbox(doc);
+            return;
+          }
+          if (e.key === "Tab") {
+            // Includes <iframe> — it's a PDF's own natural tab stop, so it
+            // must be part of the trap or Tab/Shift+Tab can walk straight
+            // out of the modal whenever a PDF (rather than an image) is
+            // being previewed.
+            const focusable = lb.querySelectorAll("button, a[href], iframe");
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && doc.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && doc.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        });
+      }
+    }
   }
 
   function renderInterests(data) {
@@ -407,6 +570,12 @@
     if (doc.title !== undefined && data && data.hero && data.hero.name) {
       doc.title = `${data.hero.name} — ${data.hero.role || "Portfolio"}`;
     }
+
+    // Re-wire filter pills + lightbox against the freshly-rendered DOM. This
+    // runs on every renderAll call (including every admin-preview update),
+    // which is what keeps the preview's filtering/lightbox behavior
+    // identical to the real site without any separate wiring step.
+    wireCertificateInteractions(doc);
   }
 
   global.Render = {
