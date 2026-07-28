@@ -390,6 +390,9 @@
       <h2 class="section-heading"><span class="section-heading__tag">06</span>Certificates</h2>
       ${filtersHtml}
       <div class="card-grid card-grid--certs" id="certGrid">${cardsHtml}</div>
+      <div class="cert-showmore-row">
+        <button type="button" class="btn btn--secondary" id="certShowMore" aria-controls="certGrid" aria-expanded="false" hidden></button>
+      </div>
       <div class="lightbox" id="certLightbox" hidden>
         <div class="lightbox__overlay" data-lightbox-close></div>
         <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Certificate preview">
@@ -405,6 +408,80 @@
   // admin preview iframe — wired up automatically inside renderAll) --------
 
   const lastFocusedByDoc = typeof WeakMap !== "undefined" ? new WeakMap() : null;
+
+  // How many cards show by default per filter view before "Show more" is
+  // needed. Kept as UI state per-document (not written back into the data
+  // in any way) so switching category pills or re-rendering the page never
+  // touches data/content.json — this is purely a display concern.
+  const CERT_DEFAULT_VISIBLE = 6;
+  const certViewStateByDoc = typeof WeakMap !== "undefined" ? new WeakMap() : null;
+
+  function getCertViewState(doc) {
+    if (!certViewStateByDoc) return { category: "all", expanded: false };
+    let state = certViewStateByDoc.get(doc);
+    if (!state) {
+      state = { category: "all", expanded: false };
+      certViewStateByDoc.set(doc, state);
+    }
+    return state;
+  }
+
+  function prefersReducedMotion(doc) {
+    const view = doc && doc.defaultView;
+    return !!(view && view.matchMedia && view.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  // Applies both the category filter and the show-more collapse in one
+  // pass, reading whatever state is currently stored for this document —
+  // called after every render and after every pill/button click, so the
+  // two behaviors always agree on what should be visible instead of two
+  // separate code paths fighting over the same cards.
+  function applyCertVisibility(doc) {
+    const grid = doc.getElementById("certGrid");
+    const moreBtn = doc.getElementById("certShowMore");
+    if (!grid) return;
+    const state = getCertViewState(doc);
+    const cards = Array.prototype.slice.call(grid.querySelectorAll(".cert-card"));
+    const matching = cards.filter(
+      (card) => state.category === "all" || card.getAttribute("data-category") === state.category
+    );
+    const reduceMotion = prefersReducedMotion(doc);
+
+    cards.forEach((card) => {
+      card.hidden = true;
+      card.classList.remove("cert-card--enter");
+    });
+    matching.forEach((card, index) => {
+      const shouldShow = state.expanded || index < CERT_DEFAULT_VISIBLE;
+      if (!shouldShow) return;
+      const wasHidden = card.hidden;
+      card.hidden = false;
+      // Fade in only cards that are newly appearing (e.g. via "Show more"),
+      // not ones that were already visible — and skip entirely under
+      // reduced motion.
+      if (wasHidden && !reduceMotion) {
+        card.classList.add("cert-card--enter");
+        void card.offsetWidth; // force layout so the opacity:0 start is registered
+        const win = doc.defaultView;
+        if (win && win.requestAnimationFrame) {
+          win.requestAnimationFrame(() => card.classList.remove("cert-card--enter"));
+        } else {
+          card.classList.remove("cert-card--enter");
+        }
+      }
+    });
+
+    const remaining = matching.length - CERT_DEFAULT_VISIBLE;
+    if (moreBtn) {
+      if (remaining > 0) {
+        moreBtn.hidden = false;
+        moreBtn.textContent = state.expanded ? "Show less" : `Show more (+${remaining})`;
+        moreBtn.setAttribute("aria-expanded", state.expanded ? "true" : "false");
+      } else {
+        moreBtn.hidden = true;
+      }
+    }
+  }
 
   function openLightbox(doc, filePath, triggerEl) {
     const lightbox = doc.getElementById("certLightbox");
@@ -444,20 +521,35 @@
     const grid = doc.getElementById("certGrid");
     const lightbox = doc.getElementById("certLightbox");
     const filters = doc.querySelector(".cert-filters");
+    const moreBtn = doc.getElementById("certShowMore");
+    const state = getCertViewState(doc);
 
     if (filters && grid) {
       const pills = Array.prototype.slice.call(filters.querySelectorAll(".filter-pill"));
       pills.forEach((pill) => {
+        // Keep the active pill in sync with restored state (e.g. after an
+        // admin-preview re-render triggered by an unrelated edit).
+        pill.classList.toggle("is-active", pill.getAttribute("data-category") === state.category);
         pill.addEventListener("click", () => {
           pills.forEach((p) => p.classList.remove("is-active"));
           pill.classList.add("is-active");
-          const category = pill.getAttribute("data-category");
-          grid.querySelectorAll(".cert-card").forEach((card) => {
-            card.hidden = category !== "all" && card.getAttribute("data-category") !== category;
-          });
+          // Switching categories always resets back to the collapsed
+          // default count for the newly selected view.
+          state.category = pill.getAttribute("data-category");
+          state.expanded = false;
+          applyCertVisibility(doc);
         });
       });
     }
+
+    if (moreBtn) {
+      moreBtn.addEventListener("click", () => {
+        state.expanded = !state.expanded;
+        applyCertVisibility(doc);
+      });
+    }
+
+    applyCertVisibility(doc);
 
     if (grid) {
       grid.addEventListener("click", (e) => {

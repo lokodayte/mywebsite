@@ -285,6 +285,9 @@ p:last-child {
   border: 1px solid transparent;
   transition: transform var(--transition), background var(--transition), border-color var(--transition);
 }
+.btn[hidden] {
+  display: none;
+}
 .btn:hover {
   transform: translateY(-1px);
 }
@@ -650,6 +653,28 @@ p:last-child {
   background: var(--accent);
   border-color: var(--accent);
   color: #ffffff;
+}
+
+/* Certificate "Show more" collapse */
+.cert-showmore-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.cert-card {
+  opacity: 1;
+  transition: border-color var(--transition), transform var(--transition), opacity 260ms ease;
+}
+.cert-card.cert-card--enter {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cert-card {
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .cert-card.cert-card--enter {
+    opacity: 1;
+  }
 }
 
 /* Certificate thumbnails */
