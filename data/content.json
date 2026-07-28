@@ -156,49 +156,12 @@
   ],
   "certificates": [
     {
-      "id": "cert-1",
-      "name": "CompTIA Security+",
-      "issuer": "CompTIA",
-      "date": "2024-10",
+      "name": "Introduction to Critical Infrastructure Protection",
+      "issuer": "OPSWAT Academy",
+      "date": "2026-06",
       "category": "Cybersecurity",
-      "link": "https://www.credly.com/example-security-plus"
-    },
-    {
-      "id": "cert-2",
-      "name": "Google Cybersecurity Professional Certificate",
-      "issuer": "Google / Coursera",
-      "date": "2024-03",
-      "category": "Cybersecurity",
-      "link": "https://www.credly.com/example-google-cyber"
-    },
-    {
-      "id": "cert-3",
-      "name": "Network Ethical Hacking for Beginners Using Kali Linux",
-      "issuer": "Udemy",
-      "date": "2024",
-      "category": "Cybersecurity",
-      "file": "assets/certificates/network-ethical-hacking-udemy.pdf"
-    },
-    {
-      "id": "cert-4",
-      "name": "Python 3 Certificate",
-      "issuer": "Sololearn",
-      "date": "2023",
-      "category": "Programming"
-    },
-    {
-      "id": "cert-5",
-      "name": "JavaScript Certificate",
-      "issuer": "Sololearn",
-      "date": "2023",
-      "category": "Programming"
-    },
-    {
-      "id": "cert-6",
-      "name": "FPV Drone Building & Piloting",
-      "issuer": "Udemy",
-      "date": "2022",
-      "category": "Drone & Hardware"
+      "file": "assets/certificates/introduction-to-cip-1.png",
+      "id": "certificate-5vz9ow"
     }
   ],
   "interests": [
