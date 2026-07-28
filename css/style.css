@@ -559,6 +559,9 @@ p:last-child {
   box-shadow: var(--shadow-soft);
   transition: border-color var(--transition), transform var(--transition);
 }
+.card[hidden] {
+  display: none;
+}
 .card:hover {
   border-color: var(--accent-dim);
   transform: translateY(-2px);
