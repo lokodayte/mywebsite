@@ -17,15 +17,24 @@ js/main.js             Public site: fetch + render + nav/scroll + gentle scroll-
 js/admin.js             Admin panel: auth, GitHub API calls, forms, live preview
 data/content.json        All editable site content
 assets/                    Uploaded/placeholder images and résumé PDF
+assets/research/            Research paper PDFs referenced by the Research section
 ```
 
 ## Option 1: Edit content directly
 
-Open `data/content.json` and edit the fields — it's a plain JSON object with a section per key (`hero`, `about`, `projects`, `skills`, `timeline`, `certificates`, `interests`, `contact`). Commit and push; GitHub Pages rebuilds automatically. `index.html` never contains portfolio content directly — everything is rendered from this file by `js/render.js`.
+Open `data/content.json` and edit the fields — it's a plain JSON object with a section per key (`hero`, `about`, `projects`, `research`, `skills`, `timeline`, `certificates`, `interests`, `contact`). Commit and push; GitHub Pages rebuilds automatically. `index.html` never contains portfolio content directly — everything is rendered from this file by `js/render.js`.
 
 ## Option 2: Edit through the admin panel
 
-`admin.html` is a full editing UI: text fields for hero/about/contact copy, and add/edit/delete list editors for projects, certificates, timeline entries, skills groups, and interests, with a live preview pane rendered using the exact same `js/render.js` functions as the real site.
+`admin.html` is a full editing UI: text fields for hero/about/contact copy, and add/edit/delete list editors for projects, research papers, certificates, timeline entries, skills groups, and interests, with a live preview pane rendered using the exact same `js/render.js` functions as the real site.
+
+### Research section
+
+The Research section showcases IB research papers as PDFs hosted directly in this repo under `assets/research/` — no links out to an external site. Each entry has a title, a context line (e.g. "IB Extended Essay — Computer Science"), a description, tags, and a `file` path pointing at the PDF.
+
+In the admin panel's **Research** tab, adding or editing a paper includes a PDF file picker: choosing a file uploads it immediately (base64-encoded, via the same GitHub Contents API pattern used everywhere else in the admin panel) to `assets/research/<slugified-filename>.pdf`, and fills in the entry's `file` field with that path once the commit succeeds. Re-uploading a file with the same name overwrites the existing PDF (the panel fetches its current SHA first). You still need to click **Save changes** afterward to publish the entry referencing it.
+
+**Manual step required:** the two seeded research entries reference `assets/research/extended-essay-home-router-security.pdf` and `assets/research/math-ia-password-bruteforce.pdf`, but the actual PDF files are not included in this repo — only a placeholder `assets/research/.gitkeep` marks where they go. Add the real PDFs either by committing them directly to that path via git, or by re-uploading them through the admin panel's Research editor once it's live (matching filenames so they land at the same paths, or updating each entry's `file` field to match wherever they end up).
 
 It has **no backend of its own** — instead, "Save changes" commits the updated `data/content.json` straight to your GitHub repository using the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents), directly from your browser. That commit triggers a normal GitHub Pages rebuild, the same as if you'd edited the file and pushed yourself.
 

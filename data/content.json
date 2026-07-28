@@ -84,6 +84,22 @@
       "id": "project-0914cn"
     }
   ],
+  "research": [
+    {
+      "title": "How Vulnerable Is a Home Router? A Penetration Testing Study Using Wireshark",
+      "context": "IB Extended Essay — Computer Science",
+      "description": "Ran a controlled, passive penetration test on a home router's default configuration using Wireshark, capturing and analyzing traffic across three attack surfaces: an HTTP login test that exposed credentials in cleartext, a DNS lookup test that revealed browsing activity despite HTTPS, and an ARP test that exposed the network's exposure to man-in-the-middle spoofing. Concluded that most consumer routers ship with these protections off by default.",
+      "tags": ["Wireshark", "Network Security", "Penetration Testing"],
+      "file": "assets/research/extended-essay-home-router-security.pdf"
+    },
+    {
+      "title": "How Does Increasing Password Length Affect the Time Required for a Brute-Force Attack Under Different Processing Speeds?",
+      "context": "IB Internal Assessment — Mathematics",
+      "description": "Built a mathematical model (T = N^L / R) comparing brute-force cracking time across CPU, GPU, multi-GPU, and theoretical quantum processing speeds, then used logarithmic linearization to show that password length — not attacker hardware — is the dominant factor in cracking resistance, holding even under quantum-scale guess rates.",
+      "tags": ["Mathematical Modeling", "Cybersecurity", "Applied Math"],
+      "file": "assets/research/math-ia-password-bruteforce.pdf"
+    }
+  ],
   "skills": [
     {
       "group": "Security & Networking",

@@ -19,7 +19,16 @@
 
   function isSafeUrl(url) {
     if (typeof url !== "string") return false;
-    return /^(https?:|mailto:|\/|\.\/|\.\.\/|#)/i.test(url.trim());
+    const trimmed = url.trim();
+    if (!trimmed) return false;
+    if (/^(https?:|mailto:)/i.test(trimmed)) return true;
+    if (/^[#/]/.test(trimmed)) return true;
+    // Any other URL scheme (javascript:, data:, vbscript:, ...) is rejected —
+    // a scheme is letters/digits/+/-/. followed by ':' before the first '/'.
+    if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return false;
+    // Everything else is a bare relative path (e.g. "assets/resume.pdf",
+    // "./x", "../x") and is safe to use as-is.
+    return true;
   }
 
   function externalLinkAttrs(url) {
@@ -29,6 +38,16 @@
     return isExternal
       ? `href="${safeHref}" target="_blank" rel="noopener noreferrer"`
       : `href="${safeHref}"`;
+  }
+
+  // For links that should always open in a new tab regardless of whether the
+  // URL is absolute or a same-origin repo-relative path — e.g. a PDF served
+  // straight from this repo's assets/ folder. Unlike externalLinkAttrs, this
+  // must never be used for in-page anchors (e.g. "#projects"), which need to
+  // stay in the same tab.
+  function fileLinkAttrs(url) {
+    if (!isSafeUrl(url)) return 'href="#"';
+    return `href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"`;
   }
 
   function statusLabel(status) {
@@ -62,6 +81,7 @@
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#research">Research</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#timeline">Experience</a></li>
         <li><a href="#certificates">Certificates</a></li>
@@ -190,6 +210,40 @@
     `;
   }
 
+  function renderResearch(data) {
+    const papers = Array.isArray(data && data.research) ? data.research : [];
+    if (!papers.length) {
+      return `
+        <h2 class="section-heading"><span class="section-heading__tag">03</span>Research</h2>
+        <p class="empty-state">No research papers published yet.</p>
+      `;
+    }
+
+    const cards = papers
+      .map((r) => {
+        const tags = Array.isArray(r.tags) ? r.tags : [];
+        const tagsHtml = tags.map((t) => `<li class="tag">${escapeHtml(t)}</li>`).join("");
+        return `
+        <article class="card research-card">
+          <h3 class="research-card__title">${escapeHtml(r.title || "")}</h3>
+          <p class="research-card__context">${escapeHtml(r.context || "")}</p>
+          <p class="research-card__desc">${escapeHtml(r.description || "")}</p>
+          <ul class="tag-list">${tagsHtml}</ul>
+          ${
+            r.file
+              ? `<a class="research-card__link" ${fileLinkAttrs(r.file)}>Read paper <span aria-hidden="true">&rarr;</span></a>`
+              : ""
+          }
+        </article>`;
+      })
+      .join("");
+
+    return `
+      <h2 class="section-heading"><span class="section-heading__tag">03</span>Research</h2>
+      <div class="card-grid card-grid--research">${cards}</div>
+    `;
+  }
+
   function renderSkills(data) {
     const groups = Array.isArray(data && data.skills) ? data.skills : [];
     const groupsHtml = groups
@@ -205,7 +259,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">03</span>Skills</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">04</span>Skills</h2>
       <div class="skill-groups">${groupsHtml}</div>
     `;
   }
@@ -230,7 +284,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">04</span>Education &amp; Experience</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">05</span>Education &amp; Experience</h2>
       <ol class="timeline-list">${itemsHtml}</ol>
     `;
   }
@@ -239,7 +293,7 @@
     const certs = Array.isArray(data && data.certificates) ? data.certificates : [];
     if (!certs.length) {
       return `
-        <h2 class="section-heading"><span class="section-heading__tag">05</span>Certificates</h2>
+        <h2 class="section-heading"><span class="section-heading__tag">06</span>Certificates</h2>
         <p class="empty-state">No certificates published yet.</p>
       `;
     }
@@ -261,7 +315,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">05</span>Certificates</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">06</span>Certificates</h2>
       <div class="card-grid card-grid--certs">${cardsHtml}</div>
     `;
   }
@@ -270,7 +324,7 @@
     const interests = Array.isArray(data && data.interests) ? data.interests : [];
     const pills = interests.map((i) => `<li class="pill">${escapeHtml(i)}</li>`).join("");
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">06</span>Interests</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">07</span>Interests</h2>
       <ul class="pill-row">${pills}</ul>
     `;
   }
@@ -285,7 +339,7 @@
       .join("");
 
     return `
-      <h2 class="section-heading"><span class="section-heading__tag">07</span>Contact</h2>
+      <h2 class="section-heading"><span class="section-heading__tag">08</span>Contact</h2>
       <div class="contact-grid">
         <div class="contact-block">
           ${
@@ -313,6 +367,7 @@
       "hero-root": renderHero,
       "about-root": renderAbout,
       "projects-root": renderProjects,
+      "research-root": renderResearch,
       "skills-root": renderSkills,
       "timeline-root": renderTimeline,
       "certificates-root": renderCertificates,
@@ -335,6 +390,7 @@
     renderHero,
     renderAbout,
     renderProjects,
+    renderResearch,
     renderSkills,
     renderTimeline,
     renderCertificates,

@@ -235,6 +235,26 @@
     return fallback + (err && err.message ? ": " + err.message : ".");
   }
 
+  // Like getContentFile, but returns null instead of throwing when the file
+  // doesn't exist yet — used to decide whether a PUT is a create (no sha) or
+  // an overwrite (needs the existing file's sha).
+  function getFileShaIfExists(path) {
+    return ghRequest("/contents/" + path + "?ref=" + encodeURIComponent(state.config.branch), {
+      method: "GET",
+      cache: "no-store",
+    }).then(function (res) {
+      if (res.status === 404) return null;
+      if (!res.ok) {
+        return apiError(res, "Failed to check " + path).then(function (err) {
+          throw err;
+        });
+      }
+      return res.json().then(function (body) {
+        return body.sha;
+      });
+    });
+  }
+
   function loadContentAndBoot() {
     return getContentFile(CONTENT_PATH).then(function (file) {
       state.sha = file.sha;
@@ -277,6 +297,17 @@
     return name.replace(/[^a-zA-Z0-9._-]/g, "-");
   }
 
+  // "My Paper (Final).pdf" -> "my-paper-final" — used to build a stable,
+  // predictable repo path for uploaded research PDFs (assets/research/<slug>.pdf)
+  // so re-uploading the same paper overwrites it instead of piling up copies.
+  function slugifyFilename(name) {
+    return name
+      .toLowerCase()
+      .replace(/\.[a-z0-9]+$/i, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
   function isValidLink(value) {
     if (!value) return false;
     return /^(https?:\/\/|mailto:|#|\.?\/?assets\/)/i.test(value.trim());
@@ -310,6 +341,7 @@
     { id: "hero", label: "Hero", build: buildHeroPanel },
     { id: "about", label: "About", build: buildAboutPanel },
     { id: "projects", label: "Projects", build: buildProjectsPanel },
+    { id: "research", label: "Research", build: buildResearchPanel },
     { id: "skills", label: "Skills", build: buildSkillsPanel },
     { id: "timeline", label: "Education & Experience", build: buildTimelinePanel },
     { id: "certificates", label: "Certificates", build: buildCertificatesPanel },
@@ -376,6 +408,7 @@
       '<section class="section hero-section"><div id="hero-root" class="container"></div></section>' +
       '<section class="section"><div id="about-root" class="container"></div></section>' +
       '<section class="section"><div id="projects-root" class="container"></div></section>' +
+      '<section class="section"><div id="research-root" class="container"></div></section>' +
       '<section class="section"><div id="skills-root" class="container"></div></section>' +
       '<section class="section"><div id="timeline-root" class="container"></div></section>' +
       '<section class="section"><div id="certificates-root" class="container"></div></section>' +
@@ -769,6 +802,48 @@
         span.textContent = f.label + (f.required ? " *" : "");
         fieldWrap.appendChild(span);
         fieldWrap.appendChild(inputEl);
+
+        if (f.type === "file") {
+          var uploadRow = document.createElement("div");
+          uploadRow.className = "asset-upload";
+          var fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = f.accept || "application/pdf";
+          var statusEl = document.createElement("span");
+          statusEl.className = "asset-upload__status";
+          uploadRow.appendChild(fileInput);
+          uploadRow.appendChild(statusEl);
+          fieldWrap.appendChild(uploadRow);
+
+          fileInput.addEventListener("change", function () {
+            var file = fileInput.files[0];
+            if (!file) return;
+            statusEl.textContent = "Uploading " + file.name + "…";
+            statusEl.className = "asset-upload__status publish-status--busy";
+            var path = (f.uploadDir || "assets/") + slugifyFilename(file.name) + ".pdf";
+
+            file
+              .arrayBuffer()
+              .then(function (buffer) {
+                var base64 = arrayBufferToBase64(buffer);
+                return getFileShaIfExists(path).then(function (sha) {
+                  var message =
+                    (sha ? "Update" : "Add") + " research paper via admin panel — " + new Date().toISOString();
+                  return putContentFile(path, base64, sha, message);
+                });
+              })
+              .then(function () {
+                inputEl.value = path;
+                statusEl.textContent = "Uploaded ✓ — " + path;
+                statusEl.className = "asset-upload__status publish-status--ok";
+              })
+              .catch(function (err) {
+                statusEl.textContent = describeApiError(err, "Upload failed");
+                statusEl.className = "asset-upload__status publish-status--error";
+              });
+          });
+        }
+
         var errEl = document.createElement("span");
         errEl.className = "field__error";
         errEl.hidden = true;
@@ -1113,6 +1188,48 @@
         { key: "description", label: "Description", type: "textarea", required: true },
         { key: "tech", label: "Tech tags (comma separated)", type: "tags" },
         { key: "link", label: "Project / repo link", type: "url", required: true },
+      ],
+    });
+  }
+
+  function buildResearchPanel(container) {
+    panelHeading(
+      container,
+      "Research",
+      "IB research papers, hosted as PDFs directly in this repo (not linked out to any external site)."
+    );
+    createObjectListEditor({
+      container: container,
+      getItems: function () {
+        if (!Array.isArray(state.data.research)) state.data.research = [];
+        return state.data.research;
+      },
+      itemNounSingular: "paper",
+      labelFn: function (i) {
+        return i.title;
+      },
+      subLabelFn: function (i) {
+        return i.context;
+      },
+      fields: [
+        { key: "title", label: "Title", required: true },
+        {
+          key: "context",
+          label: "Context",
+          required: true,
+          placeholder: "e.g. IB Extended Essay — Computer Science",
+        },
+        { key: "description", label: "Description", type: "textarea", required: true },
+        { key: "tags", label: "Tags (comma separated)", type: "tags" },
+        {
+          key: "file",
+          label: "PDF file",
+          type: "file",
+          required: true,
+          placeholder: "assets/research/your-paper.pdf",
+          accept: "application/pdf",
+          uploadDir: "assets/research/",
+        },
       ],
     });
   }
