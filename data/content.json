@@ -162,6 +162,38 @@
       "category": "Cybersecurity",
       "file": "assets/certificates/introduction-to-cip-1.png",
       "id": "certificate-5vz9ow"
+    },
+    {
+      "name": "Python Developer",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/img-2058-1.jpg",
+      "id": "certificate-5du9ms"
+    },
+    {
+      "name": "Learning Practical Network Scanning",
+      "issuer": "Mindluster",
+      "date": "2023-08",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/img-0872-1.jpg",
+      "id": "certificate-p1k387"
+    },
+    {
+      "name": "Network Security",
+      "issuer": "Mindluster",
+      "date": "2023-08",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/img-0819-1.jpg",
+      "id": "certificate-biump3"
+    },
+    {
+      "name": "Network Ethical Hacking for Beginners",
+      "issuer": "Udemy",
+      "date": "2023-07",
+      "category": "Cybersecurity",
+      "file": "",
+      "id": "certificate-i2w9be"
     }
   ],
   "interests": [
