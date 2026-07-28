@@ -1,0 +1,10 @@
+This folder holds the certificate credential files (PDF or image) referenced
+by the "file" field of entries in data/content.json's "certificates" array.
+
+Certificates don't need a file added manually — upload them straight from
+the admin panel's Certificates tab (admin.html), which commits the file
+here via the GitHub Contents API and fills in the entry's file path once
+the upload succeeds.
+
+Delete this file once at least one real certificate file has been added —
+it exists only so git tracks this otherwise-empty directory.
