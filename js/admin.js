@@ -802,6 +802,7 @@
       fields.forEach(function (f) {
         var value = source[f.key];
         var inputEl;
+        var datalistEl = null;
         if (f.type === "textarea") {
           inputEl = document.createElement("textarea");
           inputEl.value = value || "";
@@ -813,6 +814,22 @@
             opt.textContent = o.label;
             if (value === o.value) opt.selected = true;
             inputEl.appendChild(opt);
+          });
+        } else if (f.type === "category") {
+          // A plain text input backed by a <datalist> of categories already
+          // in use — natively supports both "pick an existing one" and
+          // "type a new one" without any extra toggle UI.
+          inputEl = document.createElement("input");
+          inputEl.type = "text";
+          inputEl.value = value || "";
+          var listId = "catlist-" + Math.random().toString(36).slice(2, 8);
+          inputEl.setAttribute("list", listId);
+          datalistEl = document.createElement("datalist");
+          datalistEl.id = listId;
+          (f.getOptions ? f.getOptions() : []).forEach(function (catValue) {
+            var optionEl = document.createElement("option");
+            optionEl.value = catValue;
+            datalistEl.appendChild(optionEl);
           });
         } else {
           inputEl = document.createElement("input");
@@ -828,6 +845,7 @@
         span.textContent = f.label + (f.required ? " *" : "");
         fieldWrap.appendChild(span);
         fieldWrap.appendChild(inputEl);
+        if (datalistEl) fieldWrap.appendChild(datalistEl);
 
         if (f.type === "file") {
           var uploadRow = document.createElement("div");
@@ -1317,7 +1335,7 @@
     panelHeading(
       container,
       "Certificates",
-      "Shown as cards with a credential file hosted directly in this repo — PDF or image, no external link needed."
+      "Shown as cards with a credential file hosted directly in this repo — PDF or image, no external link needed. Categories power the filter pills above the grid on the public site."
     );
     createObjectListEditor({
       container: container,
@@ -1329,12 +1347,26 @@
         return i.name;
       },
       subLabelFn: function (i) {
-        return i.issuer + " · " + i.date;
+        return [i.issuer, i.date, i.category].filter(Boolean).join(" · ");
       },
       fields: [
         { key: "name", label: "Certificate name", required: true },
         { key: "issuer", label: "Issuer", required: true },
         { key: "date", label: "Date", required: true, placeholder: "YYYY-MM" },
+        {
+          key: "category",
+          label: "Category",
+          type: "category",
+          placeholder: "e.g. Cybersecurity",
+          getOptions: function () {
+            var seen = [];
+            (state.data.certificates || []).forEach(function (c) {
+              var cat = (c.category || "").trim();
+              if (cat && seen.indexOf(cat) === -1) seen.push(cat);
+            });
+            return seen;
+          },
+        },
         {
           key: "file",
           label: "Credential file (PDF or image)",
