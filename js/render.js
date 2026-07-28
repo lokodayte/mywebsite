@@ -410,10 +410,14 @@
   const lastFocusedByDoc = typeof WeakMap !== "undefined" ? new WeakMap() : null;
 
   // How many cards show by default per filter view before "Show more" is
-  // needed. Kept as UI state per-document (not written back into the data
-  // in any way) so switching category pills or re-rendering the page never
-  // touches data/content.json — this is purely a display concern.
-  const CERT_DEFAULT_VISIBLE = 6;
+  // needed — one full row at the grid's typical desktop width (verified:
+  // .card-grid--certs lays out 4 columns across the standard 1280–1920px
+  // desktop range; only narrower widths like ~1024px drop to 3, which is
+  // normal responsive reflow, not a mismatch to chase here). Kept as UI
+  // state per-document (not written back into the data in any way) so
+  // switching category pills or re-rendering the page never touches
+  // data/content.json — this is purely a display concern.
+  const CERT_DEFAULT_VISIBLE = 4;
   const certViewStateByDoc = typeof WeakMap !== "undefined" ? new WeakMap() : null;
 
   function getCertViewState(doc) {
