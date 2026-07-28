@@ -89,83 +89,69 @@
       "title": "How Vulnerable Is a Home Router? A Penetration Testing Study Using Wireshark",
       "context": "IB Extended Essay — Computer Science",
       "description": "Ran a controlled, passive penetration test on a home router's default configuration using Wireshark, capturing and analyzing traffic across three attack surfaces: an HTTP login test that exposed credentials in cleartext, a DNS lookup test that revealed browsing activity despite HTTPS, and an ARP test that exposed the network's exposure to man-in-the-middle spoofing. Concluded that most consumer routers ship with these protections off by default.",
-      "tags": ["Wireshark", "Network Security", "Penetration Testing"],
-      "file": "assets/research/extended-essay-home-router-security.pdf"
+      "tags": [
+        "Wireshark",
+        "Network Security",
+        "Penetration Testing"
+      ],
+      "file": "assets/research/extended-essay.pdf"
     },
     {
       "title": "How Does Increasing Password Length Affect the Time Required for a Brute-Force Attack Under Different Processing Speeds?",
       "context": "IB Internal Assessment — Mathematics",
       "description": "Built a mathematical model (T = N^L / R) comparing brute-force cracking time across CPU, GPU, multi-GPU, and theoretical quantum processing speeds, then used logarithmic linearization to show that password length — not attacker hardware — is the dominant factor in cracking resistance, holding even under quantum-scale guess rates.",
-      "tags": ["Mathematical Modeling", "Cybersecurity", "Applied Math"],
-      "file": "assets/research/math-ia-password-bruteforce.pdf"
+      "tags": [
+        "Mathematical Modeling",
+        "Cybersecurity",
+        "Applied Math"
+      ],
+      "file": "assets/research/math-ia.pdf"
     }
   ],
   "skills": [
     {
       "group": "Security & Networking",
       "items": [
-        "Network Security",
-        "Linux Hardening",
-        "Wireshark",
-        "Nmap",
-        "Burp Suite",
-        "SIEM / Log Analysis",
-        "Vulnerability Assessment"
+        "Network Security Fundamentals · Ethical Hacking Basics (Kali Linux) · Network Scanning · Digital Privacy Awareness"
       ]
     },
     {
       "group": "Languages & Tools",
       "items": [
-        "Python",
-        "Bash",
-        "JavaScript",
-        "SQL",
-        "Git",
-        "Docker"
+        "Python · JavaScript · Java · HTML · CSS · SQL · Angular · Git/GitHub · Linux · VS Code / IntelliJ / PyCharm"
       ]
     },
     {
       "group": "Currently Learning",
       "items": [
-        "Malware Analysis",
-        "Cloud Security (AWS)",
-        "Security+ Exam Prep",
-        "Digital Forensics"
+        "Security+ fundamentals · Cloud security basics · AI-powered app development"
       ]
     }
   ],
   "timeline": [
     {
       "id": "tl-1",
-      "start": "2023-08",
+      "start": "2026-08",
       "end": "Present",
       "title": "B.S. Cybersecurity",
       "org": "Marist University",
-      "description": "Coursework in network security, applied cryptography, and systems administration. Active member of the Cybersecurity Club."
+      "description": "Coursework in network security, applied cryptography, and systems administration."
     },
     {
       "id": "tl-2",
-      "start": "2024-06",
-      "end": "2024-08",
-      "title": "IT Security Intern",
-      "org": "Regional Managed Services Provider",
-      "description": "Assisted with quarterly vulnerability scans, monitored SIEM alerts, and helped triage phishing reports across small-business client environments."
+      "start": "2024-08",
+      "end": "2026-05",
+      "title": "International Baccalaureate Diploma Programme",
+      "org": "International Baccalaureate",
+      "description": "UWC Dilijan, Armenia — successfully completed the International Baccalaureate Diploma"
     },
     {
       "id": "tl-3",
-      "start": "2023-09",
-      "end": "Present",
-      "title": "Cybersecurity Club — Member",
-      "org": "Marist University",
-      "description": "Participate in weekly CTF practice and help organize introductory security workshops for new students."
-    },
-    {
-      "id": "tl-4",
-      "start": "2021-08",
-      "end": "2023-06",
-      "title": "IB Diploma",
-      "org": "UWC Dilijan",
-      "description": "Completed the International Baccalaureate Diploma. Led an independent project auditing and hardening the school's network, which sparked an interest in cybersecurity."
+      "start": "2022-08",
+      "end": "2024-06",
+      "title": "B.A. Cybernetics",
+      "org": "Real School Armenia",
+      "description": "Began a Bachelor’s degree in Cybernetics in Stepanakert, Artsakh. Following displacement caused by the war, continued my studies in Yerevan, Armenia, before being accepted to United World College (UWC)."
     }
   ],
   "certificates": [
