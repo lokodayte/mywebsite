@@ -35,7 +35,7 @@
   "about": {
     "heading": "About",
     "paragraphs": [
-      "I'm an cybersecurity student at Marist University. My path here started at UWC Dilijan, where I completed the IB Diploma while building things on the side as like a full operations platform for a student-run business, a self-built fleet of FPV drones, and a stack of self-directed courses in Python, Java, C/C++, JavaScript, and SQL.\n\nOutside the classroom, I compete as an Armenian national Taekwondo champion and hold a 1st Dan black belt, the same discipline that now drives how I approach learning security from the ground up. I'm currently working through foundational ethical hacking and network security material and looking for an internship where I can put it to use on a real team."
+      "I'm a cybersecurity student at Marist University. My path here started at UWC Dilijan, where I completed the IB Diploma while building things on the side as like a full operations platform for a student-run business, a self-built fleet of FPV drones, and a stack of self-directed courses in Python, Java, C/C++, JavaScript, and SQL.\n\nOutside the classroom, I compete as an Armenian national Taekwondo champion and hold a 1st Dan black belt, the same discipline that now drives how I approach learning security from the ground up. I'm currently working through foundational ethical hacking and network security material and looking for an internship where I can put it to use on a real team."
     ],
     "photo": "assets/profile-placeholder.svg",
     "stats": [
@@ -61,6 +61,17 @@
     ]
   },
   "projects": [
+    {
+      "title": "MOSMED — Corporate Website for a Medical Technology Company",
+      "status": "live",
+      "initials": "MS",
+      "description": "Designed and built the full corporate website for MOSMED, a Yerevan-based distributor of robotic surgical technology partnering with hospitals across the South Caucasus. The site covers the company's clinical partnerships, media coverage, and press features, and ships in Armenian, Russian, and English.",
+      "tech": [
+        "Web Development · Multilingual (AM/RU/EN) · Client Project · Responsive Design"
+      ],
+      "link": "https://mosmed.am",
+      "id": "project-ctvvvw"
+    },
     {
       "title": "Bolik — Student-Run Charitable Business",
       "status": "live",
