@@ -421,28 +421,26 @@
     }
   ],
   "interests": [
-    "Capture the Flag",
+    "Olympic Taekwondo ",
     "Chess",
-    "Basketball",
     "Photography",
-    "Travel",
-    "Open Source"
+    "Mountain Biking",
+    "Kyokushin Karate",
+    "Video Games ",
+    "Volunteering ",
+    "Watching Movies and Series "
   ],
   "contact": {
-    "email": "boris.sargsyan@example.com",
-    "resume": "assets/resume-placeholder.pdf",
+    "email": "boris0sargsyan@gmail.com",
+    "resume": "assets/1785273737489-Boris-Sargsyan-Resume.pdf.pdf",
     "socials": [
       {
         "label": "GitHub",
-        "href": "https://github.com/example"
+        "href": "https://github.com/lokodayte"
       },
       {
         "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/example"
-      },
-      {
-        "label": "TryHackMe",
-        "href": "https://tryhackme.com/p/example"
+        "href": "https://www.linkedin.com/in/boris-sargsyan/"
       }
     ]
   }
