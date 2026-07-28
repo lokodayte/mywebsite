@@ -192,8 +192,24 @@
       "issuer": "Udemy",
       "date": "2023-07",
       "category": "Cybersecurity",
-      "file": "",
+      "file": "assets/certificates/uc-6f4b9b28-b4a7-465d-bc0a-389a5e76dd3c.jpg",
       "id": "certificate-i2w9be"
+    },
+    {
+      "name": "The Malware Analysis Course",
+      "issuer": "Udemy",
+      "date": "2026-07",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/uc-79724721-f92b-453e-b9f3-9d9dcbce1f9a.jpg",
+      "id": "certificate-aexhhr"
+    },
+    {
+      "name": "18 Crucial Cybersecurity Tips",
+      "issuer": "Udemy",
+      "date": "2023-07",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/uc-f7389964-613d-4a36-bf1d-b3e788371744.jpg",
+      "id": "certificate-oh3kk2"
     }
   ],
   "interests": [
