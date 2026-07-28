@@ -544,6 +544,9 @@ p:last-child {
 .card-grid--certs {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
+.card-grid--research {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
 
 .card {
   background: var(--surface);
@@ -596,7 +599,8 @@ p:last-child {
   width: fit-content;
 }
 .project-card__link:hover,
-.cert-card__link:hover {
+.cert-card__link:hover,
+.research-card__link:hover {
   text-decoration: underline;
 }
 
@@ -607,6 +611,29 @@ p:last-child {
 .cert-card__meta {
   color: var(--text-muted);
   font-size: 0.85rem;
+}
+
+.research-card__title {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.research-card__context {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.research-card__desc {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  flex-grow: 1;
+}
+.research-card__link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  width: fit-content;
 }
 
 /* =========================================================================

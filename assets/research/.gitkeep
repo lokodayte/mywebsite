@@ -1,0 +1,12 @@
+This folder holds the PDF research papers referenced by the "file" field of
+each entry in data/content.json's "research" array.
+
+The two PDFs currently referenced there —
+  extended-essay-home-router-security.pdf
+  math-ia-password-bruteforce.pdf
+— are not included in this commit and need to be added here, either by
+committing them directly via git, or by uploading them through the admin
+panel's Research section (admin.html), which commits straight to this path.
+
+Delete this file once real PDFs have been added — it exists only so git
+tracks this otherwise-empty directory.
