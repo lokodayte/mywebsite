@@ -210,6 +210,70 @@
       "category": "Cybersecurity",
       "file": "assets/certificates/uc-f7389964-613d-4a36-bf1d-b3e788371744.jpg",
       "id": "certificate-oh3kk2"
+    },
+    {
+      "name": "Learn Android Hacking For Beginners",
+      "issuer": "Udemy",
+      "date": "2023-08",
+      "category": "Cybersecurity",
+      "file": "assets/certificates/uc-78d78991-73f3-4eb5-b670-1f8c52583462.jpg",
+      "id": "certificate-ardsbc"
+    },
+    {
+      "name": "Introduction to SQL",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/5eb84dab-2249-4b8e-9f6f-396ce1b0459c.png",
+      "id": "certificate-vqaiut"
+    },
+    {
+      "name": "Introduction to HTML",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/63600768-3ff6-4911-b5e4-d693bbddb5f9.png",
+      "id": "certificate-3vkhcr"
+    },
+    {
+      "name": "Introduction to C++",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/2f705b0a-46d9-4c46-9cbe-a8ac0d309fdc.png",
+      "id": "certificate-ewg5ec"
+    },
+    {
+      "name": "C++ Intermediate",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/a984998b-4d79-456e-9daf-b39238457de5.png",
+      "id": "certificate-lwz439"
+    },
+    {
+      "name": "Introduction to CSS",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/dde8bc19-02a8-4766-8c0a-6c83fa078b63.png",
+      "id": "certificate-nhnc4o"
+    },
+    {
+      "name": "Angular",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/6d9f0735-514b-4e4f-8459-930f0c60449c.png",
+      "id": "certificate-xepfl1"
+    },
+    {
+      "name": "Introduction to Python",
+      "issuer": "Sololearn",
+      "date": "2024-03",
+      "category": "Programming",
+      "file": "assets/certificates/428cc4de-46fa-46e8-988b-ca3de7cd9f48.png",
+      "id": "certificate-66et2k"
     }
   ],
   "interests": [
