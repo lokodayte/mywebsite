@@ -421,7 +421,7 @@
       "issuer": "Kyokushin Karate Federation of Armenia",
       "date": "2014-03",
       "category": "Sports",
-      "order": 3,
+      "order": 4,
       "file": "assets/certificates/img-0483-1-scanned-page-0001.jpg",
       "id": "certificate-382ufn"
     },
@@ -430,7 +430,7 @@
       "issuer": "President of Kyokushin-kan karate-do Pan-Armenian Federation",
       "date": "2014-06",
       "category": "Sports",
-      "order": 4,
+      "order": 6,
       "file": "assets/certificates/img-0480-1-scanned-page-0001.jpg",
       "id": "certificate-euu739"
     },
@@ -439,7 +439,7 @@
       "issuer": "President of World Taekwondo Federation of Republic of Armenia",
       "date": "2019",
       "category": "Sports",
-      "order": 2,
+      "order": 3,
       "file": "assets/certificates/img-0482-1.jpg",
       "id": "certificate-ei0ya1"
     },
@@ -448,9 +448,27 @@
       "issuer": "World Taekwondo Federation of Armenia",
       "date": "2021",
       "category": "Sports",
-      "order": 1,
+      "order": 2,
       "file": "assets/certificates/img-0479-1.jpg",
       "id": "certificate-os3yta"
+    },
+    {
+      "name": "Kyokushin Karate 9 KYU Certification",
+      "issuer": "President of Kyokushin-kan Karate-do Pan-Armenian Federation",
+      "date": "2016-06",
+      "category": "Sports",
+      "file": "assets/certificates/certificate-page-0001.jpg",
+      "order": 5,
+      "id": "certificate-9f32be"
+    },
+    {
+      "name": "Taekwondo 1st Dan Certification",
+      "issuer": "KUKKIWON",
+      "date": "2025-09",
+      "category": "Sports",
+      "file": "assets/certificates/dan-certificate-page-0001.jpg",
+      "order": 1,
+      "id": "certificate-nrqblo"
     }
   ],
   "interests": [
