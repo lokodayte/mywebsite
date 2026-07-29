@@ -371,6 +371,19 @@ textarea.has-error {
   padding: 10px 0;
 }
 
+.list-editor__group-heading {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 18px 0 2px;
+}
+.list-editor__group-heading:first-child {
+  margin-top: 0;
+}
+
 .item-form {
   border: 1px dashed var(--border);
   border-radius: var(--radius-md);

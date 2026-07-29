@@ -324,6 +324,43 @@
       </svg>`;
   }
 
+  // Groups certificates by category (in the given first-appearance order)
+  // and sorts each group by its `order` field ascending. Entries missing an
+  // `order` (or a category) fall back to their original array position, so
+  // nothing ever disappears or throws just because a field is absent.
+  function sortCertificatesForDisplay(certs, categories) {
+    const withCategory = [];
+    const withoutCategory = [];
+    certs.forEach((c, idx) => {
+      const cat = (c.category || "").trim();
+      if (cat) withCategory.push({ c, idx });
+      else withoutCategory.push({ c, idx });
+    });
+
+    const byCategory = {};
+    withCategory.forEach((entry) => {
+      const cat = entry.c.category.trim();
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push(entry);
+    });
+
+    Object.keys(byCategory).forEach((cat) => {
+      byCategory[cat].sort((a, b) => {
+        const orderA = typeof a.c.order === "number" ? a.c.order : a.idx;
+        const orderB = typeof b.c.order === "number" ? b.c.order : b.idx;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.idx - b.idx;
+      });
+    });
+
+    const result = [];
+    categories.forEach((cat) => {
+      (byCategory[cat] || []).forEach((entry) => result.push(entry.c));
+    });
+    withoutCategory.forEach((entry) => result.push(entry.c));
+    return result;
+  }
+
   function renderCertificates(data) {
     const certs = Array.isArray(data && data.certificates) ? data.certificates : [];
     if (!certs.length) {
@@ -354,7 +391,16 @@
       </div>`
       : "";
 
-    const cardsHtml = certs
+    // Group by category (in the same first-appearance order as the filter
+    // pills), sorted by each entry's `order` within its group. This is what
+    // makes the "All" view read sensibly (categories grouped together, each
+    // internally ordered) and also what makes a single-category filter show
+    // entries in the right order — filtering just hides the cards that
+    // don't match, it doesn't need to re-sort anything, because this
+    // render already put them in the right order to begin with.
+    const sortedCerts = sortCertificatesForDisplay(certs, categories);
+
+    const cardsHtml = sortedCerts
       .map((c) => {
         const hasFile = !!c.file;
         let thumbHtml = "";

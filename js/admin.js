@@ -720,6 +720,68 @@
     wrap.appendChild(formHost);
     container.appendChild(wrap);
 
+    // Builds one .list-item row. moveOpts controls the ↑/↓ buttons — for a
+    // grouped list these swap `order` with the adjacent item *within the
+    // same group* rather than moving through the flat array, which is what
+    // keeps reordering one category from ever touching another's order.
+    function buildItemRow(item, idx, moveOpts) {
+      var row = document.createElement("div");
+      row.className = "list-item";
+      var label = document.createElement("div");
+      label.className = "list-item__label";
+      var main = document.createElement("span");
+      main.textContent = opts.labelFn(item) || "(untitled)";
+      label.appendChild(main);
+      if (opts.subLabelFn) {
+        var small = document.createElement("small");
+        small.textContent = opts.subLabelFn(item) || "";
+        label.appendChild(small);
+      }
+      row.appendChild(label);
+
+      var actions = document.createElement("div");
+      actions.className = "list-item__actions";
+      if (moveOpts.canMoveUp) {
+        actions.appendChild(makeActionBtn("↑", "Move up", moveOpts.onMoveUp));
+      }
+      if (moveOpts.canMoveDown) {
+        actions.appendChild(makeActionBtn("↓", "Move down", moveOpts.onMoveDown));
+      }
+      actions.appendChild(
+        makeActionBtn("Edit", "Edit", function () {
+          openForm(idx);
+        })
+      );
+      actions.appendChild(
+        makeActionBtn(
+          "Delete",
+          "Delete",
+          function () {
+            confirmDialog('Delete "' + (opts.labelFn(item) || noun) + '"? This cannot be undone.').then(function (
+              ok
+            ) {
+              if (!ok) return;
+              getItems().splice(idx, 1);
+              renderList();
+              schedulePreviewUpdate();
+            });
+          },
+          "btn--danger"
+        )
+      );
+      row.appendChild(actions);
+      return row;
+    }
+
+    function swapOrderWithinGroup(itemA, itemB) {
+      var orderA = typeof itemA.order === "number" ? itemA.order : 0;
+      var orderB = typeof itemB.order === "number" ? itemB.order : 0;
+      itemA.order = orderB;
+      itemB.order = orderA;
+      renderList();
+      schedulePreviewUpdate();
+    }
+
     function renderList() {
       var items = getItems();
       itemsEl.innerHTML = "";
@@ -728,67 +790,71 @@
         empty.className = "list-editor__empty";
         empty.textContent = "No " + noun + " items yet.";
         itemsEl.appendChild(empty);
+        return;
       }
-      items.forEach(function (item, idx) {
-        var row = document.createElement("div");
-        row.className = "list-item";
-        var label = document.createElement("div");
-        label.className = "list-item__label";
-        var main = document.createElement("span");
-        main.textContent = opts.labelFn(item) || "(untitled)";
-        label.appendChild(main);
-        if (opts.subLabelFn) {
-          var small = document.createElement("small");
-          small.textContent = opts.subLabelFn(item) || "";
-          label.appendChild(small);
-        }
-        row.appendChild(label);
 
-        var actions = document.createElement("div");
-        actions.className = "list-item__actions";
-        if (idx > 0) {
-          actions.appendChild(
-            makeActionBtn("↑", "Move up", function () {
-              arrayMove(items, idx, idx - 1);
-              renderList();
-              schedulePreviewUpdate();
+      if (opts.groupBy) {
+        var groupOrder = [];
+        var groups = {};
+        items.forEach(function (item, idx) {
+          var key = opts.groupBy(item) || "";
+          if (!groups[key]) {
+            groups[key] = [];
+            groupOrder.push(key);
+          }
+          groups[key].push({ item: item, idx: idx });
+        });
+        groupOrder.forEach(function (key) {
+          groups[key].sort(function (a, b) {
+            var orderA = typeof a.item.order === "number" ? a.item.order : a.idx;
+            var orderB = typeof b.item.order === "number" ? b.item.order : b.idx;
+            if (orderA !== orderB) return orderA - orderB;
+            return a.idx - b.idx;
+          });
+        });
+
+        groupOrder.forEach(function (key) {
+          var heading = document.createElement("h4");
+          heading.className = "list-editor__group-heading";
+          heading.textContent = key || "Uncategorized";
+          itemsEl.appendChild(heading);
+
+          var groupEntries = groups[key];
+          groupEntries.forEach(function (entry, posInGroup) {
+            itemsEl.appendChild(
+              buildItemRow(entry.item, entry.idx, {
+                canMoveUp: posInGroup > 0,
+                canMoveDown: posInGroup < groupEntries.length - 1,
+                onMoveUp: function () {
+                  swapOrderWithinGroup(entry.item, groupEntries[posInGroup - 1].item);
+                },
+                onMoveDown: function () {
+                  swapOrderWithinGroup(entry.item, groupEntries[posInGroup + 1].item);
+                },
+              })
+            );
+          });
+        });
+      } else {
+        items.forEach(function (item, idx) {
+          itemsEl.appendChild(
+            buildItemRow(item, idx, {
+              canMoveUp: idx > 0,
+              canMoveDown: idx < items.length - 1,
+              onMoveUp: function () {
+                arrayMove(items, idx, idx - 1);
+                renderList();
+                schedulePreviewUpdate();
+              },
+              onMoveDown: function () {
+                arrayMove(items, idx, idx + 1);
+                renderList();
+                schedulePreviewUpdate();
+              },
             })
           );
-        }
-        if (idx < items.length - 1) {
-          actions.appendChild(
-            makeActionBtn("↓", "Move down", function () {
-              arrayMove(items, idx, idx + 1);
-              renderList();
-              schedulePreviewUpdate();
-            })
-          );
-        }
-        actions.appendChild(
-          makeActionBtn("Edit", "Edit", function () {
-            openForm(idx);
-          })
-        );
-        actions.appendChild(
-          makeActionBtn(
-            "Delete",
-            "Delete",
-            function () {
-              confirmDialog('Delete "' + (opts.labelFn(item) || noun) + '"? This cannot be undone.').then(
-                function (ok) {
-                  if (!ok) return;
-                  items.splice(idx, 1);
-                  renderList();
-                  schedulePreviewUpdate();
-                }
-              );
-            },
-            "btn--danger"
-          )
-        );
-        row.appendChild(actions);
-        itemsEl.appendChild(row);
-      });
+        });
+      }
     }
 
     function openForm(idx) {
@@ -964,6 +1030,27 @@
         });
 
         if (!valid) return;
+
+        // For a grouped list, a brand-new item — or one whose group just
+        // changed — is placed at the end of its (possibly new) group. The
+        // ↑/↓ buttons are the only way to fine-tune position after that;
+        // editing other fields on an item that stays in the same group
+        // never touches its existing order.
+        if (opts.groupBy) {
+          var newGroupKey = opts.groupBy(result) || "";
+          var oldGroupKey = idx === -1 ? null : opts.groupBy(items[idx]) || "";
+          if (idx === -1 || newGroupKey !== oldGroupKey) {
+            var maxOrder = 0;
+            items.forEach(function (existing, i) {
+              if (i === idx) return;
+              if ((opts.groupBy(existing) || "") === newGroupKey) {
+                var existingOrder = typeof existing.order === "number" ? existing.order : 0;
+                if (existingOrder > maxOrder) maxOrder = existingOrder;
+              }
+            });
+            result.order = maxOrder + 1;
+          }
+        }
 
         if (idx === -1) {
           result.id = generateId(noun.replace(/\s+/g, "-").toLowerCase());
@@ -1335,7 +1422,7 @@
     panelHeading(
       container,
       "Certificates",
-      "Shown as cards with a credential file hosted directly in this repo — PDF or image, no external link needed. Categories power the filter pills above the grid on the public site."
+      "Shown as cards with a credential file hosted directly in this repo — PDF or image, no external link needed. Categories power the filter pills above the grid on the public site; the ↑/↓ buttons reorder a certificate within its own category only."
     );
     createObjectListEditor({
       container: container,
@@ -1343,11 +1430,14 @@
         return state.data.certificates;
       },
       itemNounSingular: "certificate",
+      groupBy: function (i) {
+        return (i.category || "").trim();
+      },
       labelFn: function (i) {
         return i.name;
       },
       subLabelFn: function (i) {
-        return [i.issuer, i.date, i.category].filter(Boolean).join(" · ");
+        return [i.issuer, i.date].filter(Boolean).join(" · ");
       },
       fields: [
         { key: "name", label: "Certificate name", required: true },
