@@ -160,6 +160,7 @@
       "issuer": "OPSWAT Academy",
       "date": "2026-06",
       "category": "Cybersecurity",
+      "order": 1,
       "file": "assets/certificates/introduction-to-cip-1.png",
       "id": "certificate-5vz9ow"
     },
@@ -168,6 +169,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 1,
       "file": "assets/certificates/img-2058-1.jpg",
       "id": "certificate-5du9ms"
     },
@@ -176,6 +178,7 @@
       "issuer": "Mindluster",
       "date": "2023-08",
       "category": "Cybersecurity",
+      "order": 2,
       "file": "assets/certificates/img-0872-1.jpg",
       "id": "certificate-p1k387"
     },
@@ -184,6 +187,7 @@
       "issuer": "Mindluster",
       "date": "2023-08",
       "category": "Cybersecurity",
+      "order": 3,
       "file": "assets/certificates/img-0819-1.jpg",
       "id": "certificate-biump3"
     },
@@ -192,6 +196,7 @@
       "issuer": "Udemy",
       "date": "2023-07",
       "category": "Cybersecurity",
+      "order": 4,
       "file": "assets/certificates/uc-6f4b9b28-b4a7-465d-bc0a-389a5e76dd3c.jpg",
       "id": "certificate-i2w9be"
     },
@@ -200,6 +205,7 @@
       "issuer": "Udemy",
       "date": "2026-07",
       "category": "Cybersecurity",
+      "order": 5,
       "file": "assets/certificates/uc-79724721-f92b-453e-b9f3-9d9dcbce1f9a.jpg",
       "id": "certificate-aexhhr"
     },
@@ -208,6 +214,7 @@
       "issuer": "Udemy",
       "date": "2023-07",
       "category": "Cybersecurity",
+      "order": 6,
       "file": "assets/certificates/uc-f7389964-613d-4a36-bf1d-b3e788371744.jpg",
       "id": "certificate-oh3kk2"
     },
@@ -216,6 +223,7 @@
       "issuer": "Udemy",
       "date": "2023-08",
       "category": "Cybersecurity",
+      "order": 7,
       "file": "assets/certificates/uc-78d78991-73f3-4eb5-b670-1f8c52583462.jpg",
       "id": "certificate-ardsbc"
     },
@@ -224,6 +232,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 2,
       "file": "assets/certificates/5eb84dab-2249-4b8e-9f6f-396ce1b0459c.png",
       "id": "certificate-vqaiut"
     },
@@ -232,6 +241,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 3,
       "file": "assets/certificates/63600768-3ff6-4911-b5e4-d693bbddb5f9.png",
       "id": "certificate-3vkhcr"
     },
@@ -240,6 +250,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 4,
       "file": "assets/certificates/2f705b0a-46d9-4c46-9cbe-a8ac0d309fdc.png",
       "id": "certificate-ewg5ec"
     },
@@ -248,6 +259,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 5,
       "file": "assets/certificates/a984998b-4d79-456e-9daf-b39238457de5.png",
       "id": "certificate-lwz439"
     },
@@ -256,6 +268,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 6,
       "file": "assets/certificates/dde8bc19-02a8-4766-8c0a-6c83fa078b63.png",
       "id": "certificate-nhnc4o"
     },
@@ -264,6 +277,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 7,
       "file": "assets/certificates/6d9f0735-514b-4e4f-8459-930f0c60449c.png",
       "id": "certificate-xepfl1"
     },
@@ -272,6 +286,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 8,
       "file": "assets/certificates/428cc4de-46fa-46e8-988b-ca3de7cd9f48.png",
       "id": "certificate-66et2k"
     },
@@ -280,6 +295,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 9,
       "file": "assets/certificates/55cd787c-3594-4df7-b0bb-a0a8bb75e444.png",
       "id": "certificate-zh8f4s"
     },
@@ -288,6 +304,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 10,
       "file": "assets/certificates/1510e358-7457-4528-832b-6125beb4eaa3.png",
       "id": "certificate-a2o8hf"
     },
@@ -296,6 +313,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 11,
       "file": "assets/certificates/a6c48e15-204a-483e-a399-e70c2e239ea6.png",
       "id": "certificate-0d8gl6"
     },
@@ -304,6 +322,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 12,
       "file": "assets/certificates/ffe1e05f-64bd-4430-a0ba-01b524c8673d.png",
       "id": "certificate-v3sug1"
     },
@@ -312,6 +331,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 13,
       "file": "assets/certificates/ce81cd9e-a953-4546-85d5-81f605604f04.png",
       "id": "certificate-vd1fp5"
     },
@@ -320,6 +340,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 14,
       "file": "assets/certificates/157cd569-0d57-4d88-bfd8-2214b8f94081.png",
       "id": "certificate-d5wr8u"
     },
@@ -328,6 +349,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 15,
       "file": "assets/certificates/ef4557ef-ff03-4d80-956f-b30209db5ccc.png",
       "id": "certificate-frg9y4"
     },
@@ -336,6 +358,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 16,
       "file": "assets/certificates/8ac592cf-e3c2-4722-8652-da34ff209db9.png",
       "id": "certificate-6iugth"
     },
@@ -344,6 +367,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 17,
       "file": "assets/certificates/408dbbc5-395b-4b12-af70-ece292b8f684.png",
       "id": "certificate-287811"
     },
@@ -352,6 +376,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 18,
       "file": "assets/certificates/8bb361c5-2cdf-46b1-b061-d9e06261a988.png",
       "id": "certificate-k31g2w"
     },
@@ -360,6 +385,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 19,
       "file": "assets/certificates/b52bfee3-5024-4139-8800-e01e7895407d.png",
       "id": "certificate-au0bxa"
     },
@@ -368,6 +394,7 @@
       "issuer": "Sololearn",
       "date": "2024-03",
       "category": "Programming",
+      "order": 20,
       "file": "assets/certificates/8ba2aecd-f34c-4d67-a88d-dbee661476c3.png",
       "id": "certificate-zygm24"
     },
@@ -376,6 +403,7 @@
       "issuer": "IBM",
       "date": "2026-06",
       "category": "Cybersecurity",
+      "order": 8,
       "file": "assets/certificates/ibmdesign20260728-20-2zennt-page-0001.jpg",
       "id": "certificate-2k9key"
     },
@@ -384,6 +412,7 @@
       "issuer": "Mindluster",
       "date": "2024-02",
       "category": "Programming",
+      "order": 21,
       "file": "assets/certificates/8924022831.jpg",
       "id": "certificate-ze9787"
     },
@@ -392,6 +421,7 @@
       "issuer": "Kyokushin Karate Federation of Armenia",
       "date": "2014-03",
       "category": "Sports",
+      "order": 1,
       "file": "assets/certificates/img-0483-1-scanned-page-0001.jpg",
       "id": "certificate-382ufn"
     },
@@ -400,6 +430,7 @@
       "issuer": "President of Kyokushin-kan karate-do Pan-Armenian Federation",
       "date": "2014-06",
       "category": "Sports",
+      "order": 2,
       "file": "assets/certificates/img-0480-1-scanned-page-0001.jpg",
       "id": "certificate-euu739"
     },
@@ -408,6 +439,7 @@
       "issuer": "President of World Taekwondo Federation of Republic of Armenia",
       "date": "2019",
       "category": "Sports",
+      "order": 3,
       "file": "assets/certificates/img-0482-1.jpg",
       "id": "certificate-ei0ya1"
     },
@@ -416,6 +448,7 @@
       "issuer": "World Taekwondo Federation of Armenia",
       "date": "2021",
       "category": "Sports",
+      "order": 4,
       "file": "assets/certificates/img-0479-1.jpg",
       "id": "certificate-os3yta"
     }
